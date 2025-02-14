@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Requests\Transaction\Category;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class UpdateTransactionCategoryRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:100',
+                // Unique constraint, respecting user_id
+                Rule::unique('transaction_categories')->where(function ($query) {
+                    return $query->where('user_id', 1);
+                })
+            ],
+            'description' => 'max:500'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.unique' => 'You already have this category name.'
+        ];
+    }
+}
