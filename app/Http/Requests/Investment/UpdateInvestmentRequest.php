@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Investment;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateInvestmentRequest extends FormRequest
@@ -29,8 +30,8 @@ class UpdateInvestmentRequest extends FormRequest
                 'max:200',
                 // Unique constraint, respecting user_id
                 Rule::unique('investments')->where(function ($query) {
-                    return $query->where('user_id', 1);
-                })
+                    return $query->where('user_id', Auth::id());
+                })->ignore($this->route('investment'))
             ],
             'description' => 'max:1000'
         ];

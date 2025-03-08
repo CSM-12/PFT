@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent\Investment;
 
 use App\Models\Investment\Investment;
 use App\Repositories\Contracts\Investment\InvestmentRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class InvestmentRepository implements InvestmentRepositoryInterface
 {
@@ -16,6 +17,9 @@ class InvestmentRepository implements InvestmentRepositoryInterface
     // Create a category
     public function create($data)
     {
+        // User ID
+        $data['user_id'] = Auth::id();
+
         return Investment::create($data);
     }
 

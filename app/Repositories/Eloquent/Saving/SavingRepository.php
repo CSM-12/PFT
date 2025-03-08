@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent\Saving;
 
 use App\Models\Saving\Saving;
 use App\Repositories\Contracts\Saving\SavingRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class SavingRepository implements SavingRepositoryInterface
 {
@@ -16,6 +17,9 @@ class SavingRepository implements SavingRepositoryInterface
     // Create a category
     public function create($data)
     {
+        // User ID
+        $data['user_id'] = Auth::id();
+
         return Saving::create($data);
     }
 

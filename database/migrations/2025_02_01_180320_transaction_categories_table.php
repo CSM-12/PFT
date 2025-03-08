@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transaction_categories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('icon', 100)->uniqid();
+            $table->string('icon', 100)->nullable()->uniqid();
             $table->string('name',100)->unique();
             $table->text('description', 500)->nullable();
             $table->timestamps();

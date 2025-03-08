@@ -20,7 +20,7 @@
 
             <div>
                 {{-- Add transaction button --}}
-                <a>
+                <a href="{{ route('transactions.create') }}">
                     <button class="d-none d-sm-inline-block btn btn-primary fw-bold mx-2">
                         Add
                     </button>

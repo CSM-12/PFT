@@ -7,9 +7,10 @@ use App\Repositories\Contracts\TransactionCategoryRepositoryInterface;
 use App\Repositories\Eloquent\TransactionCategoryRepository;
 
 use App\Repositories\Contracts\Saving\SavingRepositoryInterface;
+use App\Repositories\Contracts\Transaction\TransactionRepositoryInterface;
 use App\Repositories\Eloquent\Investment\InvestmentRepository;
 use App\Repositories\Eloquent\Saving\SavingRepository;
-
+use App\Repositories\Eloquent\Transaction\TransactionRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Bind the TransactionRepositoryInterface to the TransactionRepository
+        $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
+
         // Bind the TransactionCategoryRepositoryInterface to the TransactionCategoryRepository
         $this->app->bind(TransactionCategoryRepositoryInterface::class, TransactionCategoryRepository::class);
 

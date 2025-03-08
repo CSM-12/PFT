@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Saving;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class UpdateSavingRequest extends FormRequest
@@ -29,7 +30,7 @@ class UpdateSavingRequest extends FormRequest
                 'max:100',
                 // Unique constraint, respecting user_id
                 Rule::unique('savings')->where(function ($query) {
-                    return $query->where('user_id', 1);
+                    return $query->where('user_id', Auth::id());
                 })->ignore($this->route('saving'))
             ],
             'description' => 'max:500',

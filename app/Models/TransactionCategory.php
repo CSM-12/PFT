@@ -13,6 +13,7 @@ class TransactionCategory extends Model
 
     // Define fillable properties
     protected $fillable = [
+        'user_id',
         'name',
         'description'
     ];
@@ -22,10 +23,4 @@ class TransactionCategory extends Model
     {
         return Carbon::parse($value)->format('d M Y'); // Formats as "04 Feb 2025"
     }
-
-    // Define the scope to fetch a game by its ID
-    // public function scopeGameId($query, $gameId)
-    // {
-    //     return $query->where('id', $gameId);
-    // }
 }

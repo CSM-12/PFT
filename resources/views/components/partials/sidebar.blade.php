@@ -67,7 +67,7 @@
 
         <!-- Transactions -->
         <li class="menu-item">
-            <a href="{{ route('transactions') }}" class="menu-link">
+            <a href="{{ route('transactions.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer"></i>
                 <div data-i18n="Analytics">Transactions</div>
             </a>

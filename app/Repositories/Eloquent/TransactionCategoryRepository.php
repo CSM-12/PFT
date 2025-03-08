@@ -4,6 +4,7 @@ namespace App\Repositories\Eloquent;
 
 use App\Models\TransactionCategory;
 use App\Repositories\Contracts\TransactionCategoryRepositoryInterface;
+use Illuminate\Support\Facades\Auth;
 
 class TransactionCategoryRepository implements TransactionCategoryRepositoryInterface
 {
@@ -16,6 +17,9 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     // Create a category
     public function create($data)
     {
+        // User ID
+        $data['user_id'] = Auth::id();
+        
         return TransactionCategory::create($data);
     }
 

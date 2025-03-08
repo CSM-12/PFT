@@ -19,177 +19,176 @@
             <h4 class="fw-bold py-3 mb-4">Add Transactions</h4>
         </div>
 
-        <!-- Bootstrap Table with Header - Footer -->
-        <div class="card">
-            <h5 class="card-header">Table Header & Footer</h5>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Project</th>
-                            <th>Client</th>
-                            <th>Users</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
-                            <td>Albert Cook</td>
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Christina Parker">
-                                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                </ul>
-                            </td>
-                            <td><span class="badge bg-label-primary me-1">Active</span></td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                            Delete</a>
+        <div class="row">
+
+            <div class="col-xxl">
+                <div class="card mb-4">
+
+                    <div class="card-body">
+                        <form method="POST" action="{{ route('transactions.store') }}">
+                            @csrf
+
+                            {{-- Amount --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="amount">
+                                    Amount
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text">
+                                            <i class="bx bx-rupee"></i>
+                                        </span>
+                                        <input type="text" name="amount" class="form-control" placeholder="Amount"
+                                            aria-label="Amount" aria-describedby="transaction-amount" />
+                                    </div>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'amount'"></x-input-error>
+                                </div>
+                            </div>
+
+                            {{-- Title --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">
+                                    Title
+                                </label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i
+                                                class="bx bx-text"></i></span>
+                                        <input type="text" name="title" class="form-control"
+                                            id="basic-icon-default-fullname" placeholder="Bike..." aria-label="Bike..."
+                                            aria-describedby="basic-icon-default-fullname2" />
+                                    </div>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'title'"></x-input-error>
+                                </div>
+                            </div>
+
+                            {{-- Description --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 form-label" for="basic-icon-default-message">Description</label>
+                                <div class="col-sm-10">
+                                    <div class="input-group input-group-merge">
+                                        <span id="basic-icon-default-message2" class="input-group-text"><i
+                                                class="bx bx-comment"></i></span>
+                                        <textarea name="description" id="basic-icon-default-message" class="form-control"
+                                            placeholder="Savings for dream bike..." aria-label="Savings for dream bike..."
+                                            aria-describedby="basic-icon-default-message2" rows="2"></textarea>
+                                    </div>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'description'"></x-input-error>
+                                </div>
+                            </div>
+
+                            {{-- Type --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 form-label" for="type">Type</label>
+
+                                <div class="col-sm-10">
+                                    <div>
+                                        {{-- Transactions --}}
+                                        <input type="radio" class="btn-check" name="type" id="transaction" value="transaction"
+                                            autocomplete="off" checked>
+                                        <label class="btn btn-outline-warning" for="transaction">Transaction</label>
+
+                                        {{-- Savings --}}
+                                        <input type="radio" class="btn-check" name="type" id="saving" value="saving"
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-success" for="saving">Saving</label>
+
+                                        {{-- Investments --}}
+                                        <input type="radio" class="btn-check" name="type" id="investment" value="investment"
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-primary" for="investment">Investment</label>
+
+                                        {{-- field error --}}
+                                        <x-input-error :errors="$errors" :field="'type'"></x-input-error>
+
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>React Project</strong></td>
-                            <td>Barry Hunter</td>
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Christina Parker">
-                                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                </ul>
-                            </td>
-                            <td><span class="badge bg-label-success me-1">Completed</span></td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                            Delete</a>
+                            </div>
+
+                            {{-- Category --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 form-label" for="category_id" class="form-label">Category</label>
+
+                                <div class="col-sm-10">
+                                    <select name="category_id" class="form-select">
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                {{-- field error --}}
+                                <x-input-error :errors="$errors" :field="'category'"></x-input-error>
+                            </div>
+
+
+                            {{-- Direction --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 form-label" for="direction">Direction</label>
+
+                                <div class="col-sm-10">
+                                    <div>
+                                        {{-- Transactions --}}
+                                        <input type="radio" class="btn-check" name="direction" id="income" value="1"
+                                            autocomplete="off" checked>
+                                        <label class="btn btn-outline-success" for="income">Income</label>
+
+                                        {{-- Savings --}}
+                                        <input type="radio" class="btn-check" name="direction" id="expence" value="0"
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-danger" for="expence">Expense</label>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>VueJs Project</strong></td>
-                            <td>Trevor Baker</td>
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Christina Parker">
-                                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                </ul>
-                            </td>
-                            <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-trash me-1"></i> Delete</a>
+
+                                {{-- field error --}}
+                                <x-input-error :errors="$errors" :field="'direction'"></x-input-error>
+                            </div>
+
+                            {{-- Status --}}
+                            <div class="row mb-3">
+                                <label class="col-sm-2 form-label" for="status">Status</label>
+
+                                <div class="col-sm-10">
+                                    <div>
+                                        {{-- Transactions --}}
+                                        <input type="radio" class="btn-check" name="status" id="completed" value="completed"
+                                            autocomplete="off" checked>
+                                        <label class="btn btn-outline-success" for="completed">Complete</label>
+
+                                        {{-- Pending --}}
+                                        <input type="radio" class="btn-check" name="status" id="pending" value="pending"
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-warning" for="pending">Pending</label>
+
+                                        {{-- Failed --}}
+                                        <input type="radio" class="btn-check" name="status" id="failed" value="failed"
+                                            autocomplete="off">
+                                        <label class="btn btn-outline-danger" for="failed">Failed</label>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Bootstrap Project</strong>
-                            </td>
-                            <td>Jerry Milton</td>
-                            <td>
-                                <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                                        <img src="../assets/img/avatars/5.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                                        <img src="../assets/img/avatars/6.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                    <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top"
-                                        class="avatar avatar-xs pull-up" title="Christina Parker">
-                                        <img src="../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
-                                    </li>
-                                </ul>
-                            </td>
-                            <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                            <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-edit-alt me-1"></i> Edit</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-trash me-1"></i> Delete</a>
-                                    </div>
+
+                                {{-- field error --}}
+                                <x-input-error :errors="$errors" :field="'status'"></x-input-error>
+                            </div>
+
+
+                            {{-- Submit button --}}
+                            <div class="row justify-content-end">
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-primary">Add</button>
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                    <tfoot class="table-border-bottom-0">
-                        <tr>
-                            <th>Project</th>
-                            <th>Client</th>
-                            <th>Users</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </tfoot>
-                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-        <!-- Bootstrap Table with Header - Footer -->
 
 
     </div>

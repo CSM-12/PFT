@@ -13,6 +13,7 @@ class Investment extends Model
 
     // Define fillable properties
     protected $fillable = [
+        'user_id',
         'title',
         'description'
     ];
