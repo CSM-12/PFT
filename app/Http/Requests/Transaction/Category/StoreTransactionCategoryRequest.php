@@ -24,7 +24,7 @@ class StoreTransactionCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'title' => [
                 'required',
                 'string',
                 'max:100',
@@ -33,14 +33,16 @@ class StoreTransactionCategoryRequest extends FormRequest
                     return $query->where('user_id', Auth::id());
                 })
             ],
-            'description' => 'max:500'
+            'description' => [
+                'max:500'
+            ]
         ];
     }
 
     public function messages()
     {
         return [
-            'name.unique' => 'You already have this category name.'
+            'title.unique' => 'You already have this category.'
         ];
     }
 }

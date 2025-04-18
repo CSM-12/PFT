@@ -68,7 +68,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $saving->title }}</td>
-                                <td>{{ $saving->description }}</td>
+                                <td>{{ $saving->description?? 'No description' }}</td>
                                 <td>{{ $saving->target_amount }}</td>
                                 <td>{{ $saving->target_date }}</td>
                                 <td>{{ $saving->platform }}</td>

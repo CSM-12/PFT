@@ -11,7 +11,8 @@ class InvestmentRepository implements InvestmentRepositoryInterface
     // Get all categories
     public function all()
     {
-        return Investment::all(['id', 'title', 'description', 'investment_category', 'created_at']);
+        return Investment::where('user_id', Auth::id())
+            ->get(['id', 'title', 'description', 'investment_category', 'created_at']);
     }
 
     // Create a category

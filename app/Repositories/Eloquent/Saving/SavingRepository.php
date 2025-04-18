@@ -11,7 +11,8 @@ class SavingRepository implements SavingRepositoryInterface
     // Get all categories
     public function all()
     {
-        return Saving::all(['id', 'title', 'description', 'target_amount', 'target_date', 'platform', 'created_at']);
+        return Saving::where('user_id', Auth::id())
+            ->get(['id', 'title', 'description', 'target_amount', 'target_date', 'platform', 'created_at']);
     }
 
     // Create a category

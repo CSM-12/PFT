@@ -39,10 +39,6 @@ Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {
     })->name('dashboard');
 
     // transactions
-    Route::get('/transactions', function () {
-        return view('pages.transactions.index');
-    })->name('transactions');
-
     // ----------------- Transactions Routes Start -----------------
 
     // Transaction categories resource nested under transactions
@@ -62,6 +58,14 @@ Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {
         Route::resource('categories', TransactionCategoryController::class);
     });
 
+    // Trash Transaction
+    Route::patch('transactions/{transaction}/trash', [TransactionController::class, 'trash'])->name('transaction.trash');
+
+    // Trashed Categories
+    Route::get('transactions/trashed', [TransactionController::class, 'trashed'])->name('transactions.trashed');
+
+    // Restore Trashed Category
+    Route::patch('transactions/{transaction}/restore', [TransactionController::class, 'restore'])->name('transactions.restore');
 
     // Transactions
     Route::resource('transactions', TransactionController::class);

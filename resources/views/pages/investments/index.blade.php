@@ -67,7 +67,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $investment->title }}</td>
-                                <td>{{ $investment->description }}</td>
+                                <td>{{ $investment->description ?? 'No description' }}</td>
                                 <td>{{ $investment->created_at }}</td>
                                 <td>
                                     <a href="{{ route('investments.edit', $investment) }}">

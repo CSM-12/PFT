@@ -65,7 +65,7 @@
                                 <td>
                                     {{ $loop->iteration }}
                                 </td>
-                                <td><strong>{{ $category->name }}</strong></td>
+                                <td><strong>{{ $category->title }}</strong></td>
                                 <td><span class="d-inline-block text-truncate"
                                         style="max-width: 150px;">{{ $category->description }}</span></td>
                                 <td><span>{{ $category->created_at }}</span></td>

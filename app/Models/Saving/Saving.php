@@ -2,10 +2,12 @@
 
 namespace App\Models\Saving;
 
+use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Saving extends Model
 {
@@ -21,6 +23,13 @@ class Saving extends Model
         'platform'
     ];
 
+    // Polymorphic relation with transactions
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'category');
+    }
+
+    // Format output display date
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('d M Y'); // Formats as "04 Feb 2025"

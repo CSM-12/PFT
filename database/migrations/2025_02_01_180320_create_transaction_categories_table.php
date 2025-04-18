@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('icon', 100)->nullable()->uniqid();
-            $table->string('name',100)->unique();
+            $table->string('title',100)->unique();
             $table->text('description', 500)->nullable();
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unique(['icon', 'name']); // Unique per user
+            $table->unique(['icon', 'title']); // Unique per user
         });
     }
 

@@ -33,20 +33,18 @@
 
                             {{-- Name --}}
                             <div class="row mb-3">
-                                <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">Category
-                                    Name</label>
+                                <label class="col-sm-2 col-form-label" for="title">Category
+                                    Title</label>
                                 <div class="col-sm-10">
                                     <div class="input-group input-group-merge">
-                                        <span id="basic-icon-default-fullname2" class="input-group-text"><i
-                                                class="bx bx-category"></i></span>
-                                        <input type="text" name="name" class="form-control"
-                                            id="basic-icon-default-fullname" placeholder="Salary..." aria-label="Salary"
-                                            aria-describedby="basic-icon-default-fullname2"
-                                            value="{{ $category->name }}" />
+                                        <span class="input-group-text"><i class="bx bx-category"></i></span>
+                                        <input type="text" name="title" class="form-control" placeholder="Salary..."
+                                            aria-label="Salary" aria-describedby="category-title"
+                                            value="{{ $category->title }}" />
                                     </div>
-                                    
+
                                     {{-- field error --}}
-                                    <x-input-error :errors="$errors" :field="'name'"></x-input-error>
+                                    <x-input-error :errors="$errors" :field="'title'"></x-input-error>
                                 </div>
                             </div>
 

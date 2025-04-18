@@ -95,9 +95,6 @@
                                             <i class="bx bx-calendar"></i>
                                         </span>
 
-                                        {{-- <input type="number" name="target_amount" step="0.01" min="0" class="form-control"
-                                            id="basic-icon-default-fullname" placeholder="Amount" aria-label="Amount"
-                                            aria-describedby="basic-icon-default-fullname2" /> --}}
                                         <input type="date" name="target_date" class="form-control" value="{{ $saving->target_date }}"
                                             id="html5-date-input" />
                                     </div>
@@ -139,5 +136,5 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap Table with Header - Footer -->
+    
 @endsection

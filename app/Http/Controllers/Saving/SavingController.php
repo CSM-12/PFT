@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Requests\Saving\StoreSavingRequest;
 use App\Http\Requests\Saving\UpdateSavingRequest;
+use App\Models\Saving\Saving;
+use Illuminate\Support\Facades\Gate;
 
 class SavingController extends Controller
 {
@@ -84,6 +86,11 @@ class SavingController extends Controller
     public function edit(string $id)
     {
         try {
+            $saving = Saving::findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('update', $saving);
+
             // Get the category by ID
             $saving = $this->savingRepository->find($id);
 
@@ -157,6 +164,12 @@ class SavingController extends Controller
     public function destroy(string $id)
     {
         try {
+            // Find the saving
+            $saving = Saving::withTrashed()->findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('forceDelete', $saving);
+
             // Find the game by ID
             $this->savingRepository->destroy($id);
 
@@ -188,7 +201,13 @@ class SavingController extends Controller
     public function trash(string $id)
     {
         try {
-            // Trash Category
+            // Find the saving
+            $saving = Saving::findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('delete', $saving);
+
+            // Trash saving
             $this->savingRepository->trash($id);
 
             // Prepare alert message
@@ -242,6 +261,12 @@ class SavingController extends Controller
     public function restore(string $id)
     {
         try {
+            // Find the saving
+            $saving = Saving::withTrashed()->findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('restore', $saving);
+
             // Find the trashed game by ID and restore it
             $this->savingRepository->restore($id);
 

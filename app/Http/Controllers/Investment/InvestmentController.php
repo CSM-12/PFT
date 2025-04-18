@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Investment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Investment\StoreInvestmentRequest;
 use App\Http\Requests\Investment\UpdateInvestmentRequest;
+use App\Models\Investment\Investment;
 use App\Repositories\Contracts\Investment\InvestmentRepositoryInterface;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 
 class InvestmentController extends Controller
@@ -84,6 +86,11 @@ class InvestmentController extends Controller
     public function edit(string $id)
     {
         try {
+            $investment = Investment::findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('update', $investment);
+
             // Get the category by ID
             $investment = $this->investmentRepository->find($id);
 
@@ -157,6 +164,12 @@ class InvestmentController extends Controller
     public function destroy(string $id)
     {
         try {
+            // Find the investment
+            $investment = Investment::withTrashed()->findOrFail($id);
+
+            // Authorize to trash investment
+            Gate::authorize('forceDelete', $investment);
+
             // Find the game by ID
             $this->investmentRepository->destroy($id);
 
@@ -188,6 +201,12 @@ class InvestmentController extends Controller
     public function trash(string $id)
     {
         try {
+            // Find the saving
+            $investment = Investment::findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('delete', $investment);
+
             // Trash Category
             $this->investmentRepository->trash($id);
 
@@ -242,6 +261,12 @@ class InvestmentController extends Controller
     public function restore(string $id)
     {
         try {
+            // Find the saving
+            $investment = Investment::withTrashed()->findOrFail($id);
+
+            // Authorize to trash saving
+            Gate::authorize('restore', $investment);
+
             // Find the trashed game by ID and restore it
             $this->investmentRepository->restore($id);
 

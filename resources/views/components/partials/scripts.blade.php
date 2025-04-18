@@ -30,3 +30,6 @@
         toast.show(); // Show each toast
     });
 </script>
+
+{{-- Livewire script --}}
+@livewireScripts

@@ -24,7 +24,7 @@ class UpdateTransactionCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => [
+            'title' => [
                 'required',
                 'string',
                 'max:100',
@@ -40,7 +40,7 @@ class UpdateTransactionCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.unique' => 'You already have this category name.'
+            'title.unique' => 'You already have this category.'
         ];
     }
 }

@@ -41,7 +41,7 @@
                                     {{ $loop->iteration }}
                                 </td>
                                 <td>
-                                    <strong>{{ $category->name }}</strong>
+                                    <strong>{{ $category->title }}</strong>
                                 </td>
                                 <td>
                                     <span class="d-inline-block text-truncate"
@@ -53,7 +53,7 @@
 
                                 {{-- Actions --}}
                                 <td>
-                                    {{-- Restore Game --}}
+                                    {{-- Restore transaction category --}}
                                     <form action="{{ route('transactions.categories.restore', $category) }}" method="POST" class="d-inline"
                                         data-bs-toggle="tooltip" data-bs-title="Restore">
                                         @csrf
@@ -64,7 +64,7 @@
                                         </button>
                                     </form>
 
-                                    {{-- Delete Game --}}
+                                    {{-- Delete transaction category --}}
                                     <form action="{{ route('transactions.categories.destroy', $category) }}" method="POST" class="d-inline"
                                         data-bs-toggle="tooltip" data-bs-title="Delete">
                                         @csrf

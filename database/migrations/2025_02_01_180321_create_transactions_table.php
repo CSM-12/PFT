@@ -14,14 +14,13 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->enum('type', ['transaction', 'saving', 'investment'])->default('transaction');
-            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
+            $table->morphs('category');
             $table->string('title', 50)->nullable();
             $table->text('description')->nullable();
             $table->decimal('amount', 15, 2)->default(0.00);
             $table->tinyInteger('direction')->default(0); // 1 = Incoming, 0 = Outgoing
             $table->enum('status', ['completed', 'failed', 'pending'])->default('completed');
-            
+
             $table->timestamps();
             $table->softDeletes();
         });

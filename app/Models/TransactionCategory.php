@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class TransactionCategory extends Model
 {
@@ -14,11 +16,17 @@ class TransactionCategory extends Model
     // Define fillable properties
     protected $fillable = [
         'user_id',
-        'name',
+        'title',
         'description'
     ];
 
-    // Format output date
+    // Polymorphic relation with transactions
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'category');
+    }
+
+    // Format output date for display
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->format('d M Y'); // Formats as "04 Feb 2025"

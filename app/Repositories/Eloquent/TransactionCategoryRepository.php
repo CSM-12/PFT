@@ -11,7 +11,7 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     // Get all categories
     public function all()
     {
-        return TransactionCategory::all(['id', 'name', 'description', 'created_at']);
+        return TransactionCategory::all(['id', 'title', 'description', 'created_at']);
     }
 
     // Create a category
@@ -26,7 +26,7 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     // Get a category by ID
     public function find($id)
     {
-        return TransactionCategory::select('id', 'name', 'description')->findOrFail($id);
+        return TransactionCategory::select('id', 'title', 'description')->findOrFail($id);
     }
 
     // Update a category

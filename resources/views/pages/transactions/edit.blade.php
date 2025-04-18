@@ -16,7 +16,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="w-100 d-flex justify-content-between align-items-center">
             {{-- Page Title --}}
-            <h4 class="fw-bold py-3 mb-4">Add Transactions</h4>
+            <h4 class="fw-bold py-3 mb-4">Edit Transactions</h4>
         </div>
 
         <div class="row">
@@ -25,8 +25,9 @@
                 <div class="card mb-4">
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('transactions.store') }}">
+                        <form method="POST" action="{{ route('transactions.update', $transaction) }}">
                             @csrf
+                            @method('PUT')
 
                             {{-- Amount --}}
                             <div class="row mb-3">
@@ -39,7 +40,8 @@
                                             <i class="bx bx-rupee"></i>
                                         </span>
                                         <input type="text" name="amount" class="form-control" placeholder="Amount"
-                                            aria-label="Amount" aria-describedby="transaction-amount" />
+                                            aria-label="Amount" aria-describedby="transaction-amount"
+                                            value="{{ $transaction->amount }}" />
                                     </div>
 
                                     {{-- field error --}}
@@ -58,7 +60,8 @@
                                                 class="bx bx-text"></i></span>
                                         <input type="text" name="title" class="form-control"
                                             id="basic-icon-default-fullname" placeholder="Bike..." aria-label="Bike..."
-                                            aria-describedby="basic-icon-default-fullname2" />
+                                            aria-describedby="basic-icon-default-fullname2"
+                                            value="{{ $transaction->title }}" />
                                     </div>
 
                                     {{-- field error --}}
@@ -75,16 +78,16 @@
                                                 class="bx bx-comment"></i></span>
                                         <textarea name="description" id="basic-icon-default-message" class="form-control"
                                             placeholder="Savings for dream bike..." aria-label="Savings for dream bike..."
-                                            aria-describedby="basic-icon-default-message2" rows="2"></textarea>
+                                            aria-describedby="basic-icon-default-message2" rows="2">{{ $transaction->description }}</textarea>
                                     </div>
 
                                     {{-- field error --}}
                                     <x-input-error :errors="$errors" :field="'description'"></x-input-error>
                                 </div>
                             </div>
-
-                            {{-- Category --}}
-                            <livewire:forms.category-select />
+                            
+                            {{-- Category Livewire Component--}}
+                            <livewire:forms.category-select :type="$transaction->category_type" :category_id="$transaction->category_id" :direction="$transaction->direction" />
 
                             {{-- Status --}}
                             <div class="row mb-3">
@@ -93,18 +96,20 @@
                                 <div class="col-sm-10">
                                     <div>
                                         {{-- Transactions --}}
-                                        <input type="radio" class="btn-check" name="status" id="completed" value="completed"
-                                            autocomplete="off" checked>
+                                        <input type="radio" class="btn-check" name="status" id="completed"
+                                            value="completed" autocomplete="off"
+                                            {{ $transaction->status == 'completed' ? 'checked' : '' }}>
                                         <label class="btn btn-outline-success" for="completed">Complete</label>
 
                                         {{-- Pending --}}
-                                        <input type="radio" class="btn-check" name="status" id="pending" value="pending"
-                                            autocomplete="off">
+                                        <input type="radio" class="btn-check" name="status" id="pending"
+                                            value="pending" autocomplete="off"
+                                            {{ $transaction->status == 'pending' ? 'checked' : '' }}>
                                         <label class="btn btn-outline-warning" for="pending">Pending</label>
 
                                         {{-- Failed --}}
                                         <input type="radio" class="btn-check" name="status" id="failed" value="failed"
-                                            autocomplete="off">
+                                            autocomplete="off" {{ $transaction->status == 'failed' ? 'checked' : '' }}>
                                         <label class="btn btn-outline-danger" for="failed">Failed</label>
                                     </div>
                                 </div>
@@ -117,7 +122,7 @@
                             {{-- Submit button --}}
                             <div class="row justify-content-end">
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-primary">Create</button>
+                                    <button type="submit" class="btn btn-primary">Edit</button>
                                 </div>
                             </div>
                         </form>
