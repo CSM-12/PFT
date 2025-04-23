@@ -74,6 +74,7 @@
                         <form id="formAuthentication" class="mb-3" action="{{ route('login.submit') }}" method="POST">
                             @csrf
 
+                            {{-- Email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" id="email" name="email"
@@ -83,6 +84,7 @@
                                 <x-input-error :errors="$errors" :field="'email'"></x-input-error>
                             </div>
 
+                            {{-- Password --}}
                             <div class="mb-3 form-password-toggle">
                                 <div class="d-flex justify-content-between">
                                     <label class="form-label" for="password">Password</label>
@@ -100,12 +102,16 @@
                                 {{-- field error --}}
                                 <x-input-error :errors="$errors" :field="'password'"></x-input-error>
                             </div>
+
+                            {{-- Remember mes --}}
                             <div class="mb-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember" />
+                                    <input class="form-check-input" name="remember" type="checkbox" id="remember" />
                                     <label class="form-check-label" for="remember"> Remember Me </label>
                                 </div>
                             </div>
+
+                            {{-- Submit --}}
                             <div class="mb-3">
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                             </div>

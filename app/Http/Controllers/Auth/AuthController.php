@@ -17,11 +17,10 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
+            
             $credentials = $request->validated(); // Extract validated input as an array
             $remember = $request->boolean('remember'); // Ensure 'remember' is a boolean
-
-            // Remember me token
-            $remember = $request->has('remember');
+            
 
             // Authentication
             if (Auth::attempt($credentials, $remember)) {
