@@ -39,7 +39,7 @@
                                         <span id="basic-icon-default-fullname2" class="input-group-text">
                                             <i class="bx bx-rupee"></i>
                                         </span>
-                                        <input type="text" name="amount" class="form-control" placeholder="Amount"
+                                        <input type="number" name="amount" class="form-control currency-input" placeholder="Amount"
                                             aria-label="Amount" aria-describedby="transaction-amount"
                                             value="{{ $transaction->amount }}" />
                                     </div>

@@ -76,8 +76,8 @@
                                             <i class="bx bx-rupee"></i>
                                         </span>
 
-                                        <input type="number" name="target_amount" step="0.01" min="0"
-                                            class="form-control" id="basic-icon-default-fullname" placeholder="Amount"
+                                        <input type="number" name="target_amount"
+                                            class="form-control currency-input" id="basic-icon-default-fullname" placeholder="Amount"
                                             aria-label="Amount" aria-describedby="basic-icon-default-fullname2" value="{{ $saving->target_amount }}"/>
                                     </div>
 
