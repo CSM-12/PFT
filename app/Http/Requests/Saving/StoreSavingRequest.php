@@ -24,6 +24,15 @@ class StoreSavingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'icon' => [
+                'required',
+                'string',
+                'max:255',
+                // Unique constraint, respecting user_id
+                Rule::unique('savings')->where(function ($query) {
+                    return $query->where('user_id', Auth::id());
+                })
+            ],
             'title' => [
                 'required',
                 'string',

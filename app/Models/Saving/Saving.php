@@ -16,6 +16,7 @@ class Saving extends Model
     // Define fillable properties
     protected $fillable = [
         'user_id',
+        'icon',
         'title',
         'description',
         'target_amount',

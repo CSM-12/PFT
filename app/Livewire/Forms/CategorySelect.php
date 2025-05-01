@@ -16,7 +16,7 @@ class CategorySelect extends Component
     public $direction;
     public $categories = [];
 
-    public function mount($type = null, $category_id = null, $direction = null)
+    public function mount($type = 'transactioncategory', $category_id = null, $direction = null)
     {
         // set type as transaction if its transactioncategory
         if(strtolower(class_basename($type)) === 'transactioncategory'){

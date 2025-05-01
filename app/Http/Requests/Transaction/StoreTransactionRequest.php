@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Transaction;
 
 use App\Rules\Transaction\CategoryType;
+use App\Rules\Transaction\HasSufficientSavings;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreTransactionRequest extends FormRequest
@@ -22,12 +23,13 @@ class StoreTransactionRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+
+        $rules = [
             'amount' => [
                 'required',
                 'numeric',
                 'decimal:2',
-                'min:0'
+                'min:0',
             ],
             'title' => [
                 'nullable',
@@ -57,5 +59,12 @@ class StoreTransactionRequest extends FormRequest
                 'in:completed,pending,failed'
             ]
         ];
+
+        // Apply the rule only when direction is 0 (withdrawal) and category_type is 'saving'
+        if ($this->input('direction') === '0' && $this->input('category_type') === 'saving') {
+            $rules['amount'][] = new HasSufficientSavings($this->input('category_id'));
+        }
+
+        return $rules;
     }
 }

@@ -30,6 +30,9 @@
                         <form method="POST" action="{{ route('savings.store') }}">
                             @csrf
 
+                            {{-- Category icon --}}
+                            <x-icon-selector name="bx-wallet" :selected="old('icon')" label="Choose a Category Icon" />
+
                             {{-- Title --}}
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">
@@ -75,9 +78,9 @@
                                             <i class="bx bx-rupee"></i>
                                         </span>
 
-                                        <input type="number" name="target_amount"
-                                            class="form-control currency-input" id="basic-icon-default-fullname" placeholder="Amount"
-                                            aria-label="Amount" aria-describedby="basic-icon-default-fullname2" />
+                                        <input type="number" name="target_amount" class="form-control currency-input"
+                                            id="basic-icon-default-fullname" placeholder="Amount" aria-label="Amount"
+                                            aria-describedby="basic-icon-default-fullname2" />
                                     </div>
 
                                     {{-- field error --}}
@@ -116,7 +119,8 @@
                                         <span id="basic-icon-default-fullname2" class="input-group-text"><i
                                                 class="bx bx-bank"></i></span>
                                         <input type="text" name="platform" class="form-control"
-                                            id="basic-icon-default-fullname" placeholder="Bank, Gold, locker" aria-label="Bank, Gold, locker"
+                                            id="basic-icon-default-fullname" placeholder="Bank, Gold, locker"
+                                            aria-label="Bank, Gold, locker"
                                             aria-describedby="basic-icon-default-fullname2" />
                                     </div>
 
