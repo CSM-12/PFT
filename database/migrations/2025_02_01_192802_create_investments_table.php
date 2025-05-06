@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('investments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Link to the user
+            $table->string('icon', 100); // Saving category icon
             $table->string('title', 255); // Investment title
             $table->text('description')->nullable(); // Optional description
             $table->foreignId('investment_category')->nullable()->constrained()->onDelete('set null'); // Foreign key to investment_categories table

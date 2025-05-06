@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('savings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // Link to the user
-            $table->string('icon', 255); // Saving category icon
+            $table->string('icon', 100); // Saving category icon
             $table->string('title', 255); // Saving goal title (unique within the user's savings)
             $table->text('description')->nullable(); // Optional description
             $table->decimal('target_amount', 15, 2)->nullable(); // Target amount to save (nullable)

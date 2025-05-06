@@ -31,7 +31,7 @@
                             @csrf
 
                             {{-- Category icon --}}
-                            <x-icon-selector name="bx-wallet" :selected="old('icon')" label="Choose a Category Icon" />
+                            <x-icon-selector />
 
                             {{-- Title --}}
                             <div class="row mb-3">

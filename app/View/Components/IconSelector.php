@@ -8,18 +8,14 @@ use Illuminate\View\Component;
 
 class IconSelector extends Component
 {
-    public $name;
-    public $selected;
-    public $label;
+    public $icon;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($name = 'bx-wallet', $selected = null, $label = 'Select Icon')
+    public function __construct($icon = 'bx-category-alt')
     {
-        $this->name = $name;
-        $this->selected = $selected;
-        $this->label = $label;
+        $this->icon = $icon;
     }
 
     /**

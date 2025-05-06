@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Saving;
 
+use App\Rules\ValidIcon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
@@ -24,6 +25,18 @@ class UpdateSavingRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'icon' => [
+                'required',
+                'string',
+                'max:100',
+                // Unique icon
+                Rule::unique('savings')->where(function ($query) {
+                    return $query->where('user_id', Auth::id());
+                })->ignore($this->route('saving')),
+
+                // Valid icon 
+                new ValidIcon
+            ],
             'title' => [
                 'required',
                 'string',

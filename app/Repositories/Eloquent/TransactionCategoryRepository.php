@@ -26,7 +26,7 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     // Get a category by ID
     public function find($id)
     {
-        return TransactionCategory::select('id', 'title', 'description')->findOrFail($id);
+        return TransactionCategory::select('id', 'icon', 'title', 'description')->findOrFail($id);
     }
 
     // Update a category

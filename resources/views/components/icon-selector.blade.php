@@ -1,5 +1,5 @@
 @php
-    $icons = config('category_icons');
+    $boxIcons = config('category_icons');
 @endphp
 
 <div class="row mb-3">
@@ -9,9 +9,9 @@
     </label>
 
     <div class="col-sm-10" data-bs-toggle="modal" data-bs-target="#icon-selector">
-        <span class="h3 border border-1 p-2 rounded bx {{ $name }}" id="icon-selector-preview"></span>
+        <span class="h3 border border-1 p-2 rounded bx {{ $icon }}" id="icon-selector-preview"></span>
 
-        <input type="hidden" name="icon" id="icon-selector-input" value="{{ $name }}">
+        <input type="hidden" name="icon" id="icon-selector-input" value="{{ $icon }}">
 
         {{-- field error --}}
         <x-input-error :errors="$errors" :field="'icon'"></x-input-error>
@@ -26,12 +26,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    @foreach ($icons as $icon)
-                        <button type="button" class="btn btn-icon btn-primary"
-                            onclick="setIcon('{{ $icon }}')" data-bs-dismiss="modal">
-                            <span class="bx {{ $icon }}"></span>
-                        </button>
-                    @endforeach
+                    <div class="d-flex justify-content-center flex-wrap" style="max-height: 300px; overflow-y: scroll">
+                        @foreach ($boxIcons as $boxIcon)
+                            <button type="button" class="btn btn-icon btn-primary m-1"
+                                onclick="setIcon('{{ $boxIcon }}')" data-bs-dismiss="modal">
+                                <span class="bx {{ $boxIcon }}"></span>
+                            </button>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>

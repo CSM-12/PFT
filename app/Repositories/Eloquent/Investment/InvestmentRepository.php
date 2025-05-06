@@ -27,7 +27,7 @@ class InvestmentRepository implements InvestmentRepositoryInterface
     // Get a category by ID
     public function find($id)
     {
-        return Investment::select('id', 'title', 'description', 'created_at')->findOrFail($id);
+        return Investment::select('id', 'icon', 'title', 'description', 'created_at')->findOrFail($id);
     }
 
     // Update a category

@@ -30,6 +30,9 @@
                         <form method="POST" action="{{ route('investments.store') }}">
                             @csrf
 
+                            {{-- Category icon --}}
+                            <x-icon-selector />
+
                             {{-- Title --}}
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">

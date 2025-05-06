@@ -31,6 +31,9 @@
                             @csrf
                             @method('PUT')
 
+                            {{-- Category icon --}}
+                            <x-icon-selector :icon="$saving->icon" />
+
                             {{-- Title --}}
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label" for="basic-icon-default-fullname">

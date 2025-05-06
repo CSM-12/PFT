@@ -27,7 +27,7 @@ class SavingRepository implements SavingRepositoryInterface
     // Get a category by ID
     public function find($id)
     {
-        return Saving::select('id', 'title', 'description', 'target_amount', 'target_date', 'platform')->findOrFail($id);
+        return Saving::select('id', 'icon', 'title', 'description', 'target_amount', 'target_date', 'platform')->findOrFail($id);
     }
 
     // Update a category
