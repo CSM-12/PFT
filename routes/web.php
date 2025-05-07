@@ -29,6 +29,25 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.su
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+// ----------------- Reset Password -----------------
+// Forgot password form
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->middleware('guest')
+    ->name('password.request');
+
+// Password reset link
+Route::post('/forgot-password', [AuthController::class, 'sendForgotPasswordLink'])
+    ->middleware('guest')
+    ->name('password.email');
+
+// Reset password form
+Route::get('password/reset/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+
+// Update password
+Route::post('password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
+
+
+
 
 // Authorizing user
 Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {

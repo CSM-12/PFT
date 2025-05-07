@@ -3,7 +3,7 @@
 
 {{-- Page title --}}
 @section('page-title')
-    Login
+    Forgot Password
 @endsection
 
 {{-- Page content --}}
@@ -11,7 +11,8 @@
     <div class="container-xxl">
         <div class="authentication-wrapper authentication-basic container-p-y">
             <div class="authentication-inner">
-                <!-- Login -->
+
+                <!-- Forgot Password -->
                 <div class="card">
                     <div class="card-body">
                         <!-- Logo -->
@@ -68,64 +69,32 @@
                             </a>
                         </div>
                         <!-- /Logo -->
-                        <h4 class="mb-2">Welcome to Sneat! 👋</h4>
-                        <p class="mb-4">Please sign-in to your account and start the adventure</p>
-
-                        <form id="formAuthentication" class="mb-3" action="{{ route('login.submit') }}" method="POST">
+                        <h4 class="mb-2">Forgot Password? 🔒</h4>
+                        <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
+                        <form id="formAuthentication" class="mb-3" action="{{ route('password.email') }}" method="POST">
                             @csrf
 
-                            {{-- Email --}}
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="text" class="form-control" id="email" name="email"
-                                    placeholder="Enter your email or username" autofocus />
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="Enter your email" autofocus />
 
                                 {{-- field error --}}
                                 <x-input-error :errors="$errors" :field="'email'"></x-input-error>
                             </div>
 
-                            {{-- Password --}}
-                            <div class="mb-3 form-password-toggle">
-                                <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">Password</label>
-                                    <a href="auth-forgot-password-basic.html">
-                                        <small>Forgot Password?</small>
-                                    </a>
-                                </div>
-                                <div class="input-group input-group-merge">
-                                    <input type="password" id="password" class="form-control" name="password"
-                                        placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                                        aria-describedby="password" />
-                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
-                                </div>
-
-                                {{-- field error --}}
-                                <x-input-error :errors="$errors" :field="'password'"></x-input-error>
-                            </div>
-
-                            {{-- Remember mes --}}
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="remember" type="checkbox" id="remember" />
-                                    <label class="form-check-label" for="remember"> Remember Me </label>
-                                </div>
-                            </div>
-
-                            {{-- Submit --}}
-                            <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
-                            </div>
+                            <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
                         </form>
-
-                        <p class="text-center">
-                            <span>New on our platform?</span>
-                            <a href="{{ route('register') }}">
-                                <span>Create an account</span>
+                        <div class="text-center">
+                            <a href="auth-login-basic.html" class="d-flex align-items-center justify-content-center">
+                                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                Back to login
                             </a>
-                        </p>
+                        </div>
                     </div>
                 </div>
-                <!-- /Register -->
+                <!-- /Forgot Password -->
+
             </div>
         </div>
     </div>

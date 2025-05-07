@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -17,10 +20,10 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         try {
-            
+
             $credentials = $request->validated(); // Extract validated input as an array
             $remember = $request->boolean('remember'); // Ensure 'remember' is a boolean
-            
+
 
             // Authentication
             if (Auth::attempt($credentials, $remember)) {
@@ -110,5 +113,61 @@ class AuthController extends Controller
             // Return to games index page
             return redirect()->back();
         }
+    }
+
+    // Forgot password page
+    public function forgotPassword()
+    {
+        return view('pages.authentication.forgot-password');
+    }
+
+    // Send forgot password link 
+    public function sendForgotPasswordLink(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email|exists:users,email',
+        ]);
+
+        $status = Password::sendResetLink(
+            $request->only('email')
+        );
+
+        return $status === Password::RESET_LINK_SENT
+            ? back()->with('status', __($status))
+            : back()->withErrors(['email' => __($status)]);
+    }
+
+    // Password reset form
+    public function showResetForm(Request $request, $token)
+    {
+        return view('pages.authentication.reset-password', [
+            'token' => $token,
+            'email' => $request->query('email'),
+        ]);
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'token' => 'required',
+            'email' => 'required|email|exists:users,email',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $status = Password::reset(
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) {
+                $user->forceFill([
+                    'password' => Hash::make($password),
+                    'remember_token' => Str::random(60),
+                ])->save();
+
+                event(new PasswordReset($user));
+            }
+        );
+
+        return $status == Password::PASSWORD_RESET
+            ? redirect()->route('login')->with('status', __($status))
+            : back()->withErrors(['email' => [__($status)]]);
     }
 }
