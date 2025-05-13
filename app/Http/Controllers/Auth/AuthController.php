@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\SendResetFormRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -122,19 +124,41 @@ class AuthController extends Controller
     }
 
     // Send forgot password link 
-    public function sendForgotPasswordLink(Request $request)
+    public function sendForgotPasswordLink(SendResetFormRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-        ]);
+        try {
+            // Send reset password link
+            $status = Password::sendResetLink(
+                $request->only('email')
+            );
 
-        $status = Password::sendResetLink(
-            $request->only('email')
-        );
+            // Check status
+            if ($status === Password::RESET_LINK_SENT) {
+                // Prepare alert message
+                session()->flash('alerts', [
+                    'success' => ['Reset password link sent on your email!']
+                ]);
+            } else {
+                // Prepare alert message
+                session()->flash('alerts', [
+                    'warning' => ['Something went wrong while sending reset link!']
+                ]);
+            }
 
-        return $status === Password::RESET_LINK_SENT
-            ? back()->with('status', __($status))
-            : back()->withErrors(['email' => __($status)]);
+            // Return to reset form page
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error sending reset password link: " . $e->getMessage());
+
+            // Prepare alert message
+            session()->flash('alerts', [
+                'warning' => ['Something went wrong while sending reset link!']
+            ]);
+
+            // Return to games index page
+            return redirect()->back();
+        }
     }
 
     // Password reset form
@@ -146,28 +170,50 @@ class AuthController extends Controller
         ]);
     }
 
-    public function resetPassword(Request $request)
+    public function resetPassword(ResetPasswordRequest $request)
     {
-        $request->validate([
-            'token' => 'required',
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
+        try {
+            $status = Password::reset(
+                $request->only('email', 'password', 'password_confirmation', 'token'),
+                function ($user, $password) {
+                    $user->forceFill([
+                        'password' => Hash::make($password),
+                        'remember_token' => Str::random(60),
+                    ])->save();
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function ($user, $password) {
-                $user->forceFill([
-                    'password' => Hash::make($password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+                    // Fire an event
+                    // event(new PasswordReset($user));
+                }
+            );
 
-                event(new PasswordReset($user));
+            if ($status == Password::PASSWORD_RESET) {
+                // Prepare alert message
+                session()->flash('alerts', [
+                    'success' => ['Password reset successfully!']
+                ]);
+
+                // Redirect on login page
+                return redirect()->route('login');
+            } else {
+                // Prepare alert message
+                session()->flash('alerts', [
+                    'warning' => ['Something went wrong while resetting password!']
+                ]);
+
+                // Redirect back
+                return redirect()->back();
             }
-        );
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error sending reset password link: " . $e->getMessage());
 
-        return $status == Password::PASSWORD_RESET
-            ? redirect()->route('login')->with('status', __($status))
-            : back()->withErrors(['email' => [__($status)]]);
+            // Prepare alert message
+            session()->flash('alerts', [
+                'warning' => ['Something went wrong while resetting password!']
+            ]);
+
+            // Return to games index page
+            return redirect()->back();
+        }
     }
 }
