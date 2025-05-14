@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Investment\InvestmentController;
 use App\Http\Controllers\Saving\SavingController;
+use App\Http\Controllers\Support\SupportController;
 use App\Http\Controllers\Transaction\Category\TransactionCategoryController;
 use App\Http\Controllers\Transaction\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -45,8 +46,6 @@ Route::get('password/reset/{token}', [AuthController::class, 'showResetForm'])->
 
 // Update password
 Route::post('password/reset', [AuthController::class, 'resetPassword'])->name('password.update');
-
-
 
 
 // Authorizing user
@@ -116,4 +115,12 @@ Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {
 
     // Investments
     Route::resource('investments', InvestmentController::class);
+
+
+    // ----------------- Support -----------------
+    // Show form
+    Route::get('/support', [SupportController::class, 'create'])->name('support.create');
+
+    // Send support
+    Route::post('/support', [SupportController::class, 'send'])->name('support.send');
 });
