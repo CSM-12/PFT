@@ -58,7 +58,7 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item active">
+        <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -66,7 +66,7 @@
         </li>
 
         <!-- Transactions -->
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('transactions.index') ? 'active' : '' }}">
             <a href="{{ route('transactions.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-transfer"></i>
                 <div data-i18n="Analytics">Transactions</div>
@@ -74,7 +74,7 @@
         </li>
 
         <!-- Savings -->
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('savings.index') ? 'active' : '' }}">
             <a href="{{ route('savings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-wallet"></i>
                 <div data-i18n="Analytics">Savings</div>
@@ -82,7 +82,7 @@
         </li>
 
         <!-- Investments -->
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('investments.index') ? 'active' : '' }}">
             <a href="{{ route('investments.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-line-chart"></i>
                 <div data-i18n="Analytics">Investments</div>
@@ -110,7 +110,7 @@
 
         <!-- Misc -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">Misc</span></li>
-        <li class="menu-item">
+        <li class="menu-item {{ request()->routeIs('support.create') ? 'active' : '' }}">
             <a href="{{ route('support.create') }}"
                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
