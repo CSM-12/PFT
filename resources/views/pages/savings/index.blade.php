@@ -48,7 +48,7 @@
         <!-- Bootstrap Table with Header - Footer -->
         <div class="card">
             <h5 class="card-header">Savings</h5>
-            <div class="table-responsive text-nowrap">
+            {{-- <div class="table-responsive text-nowrap">
                 <table class="table">
                     <thead>
                         <tr>
@@ -92,6 +92,10 @@
 
                     </tbody>
                 </table>
+            </div> --}}
+
+            <div>
+                <livewire:tables.saving-table />
             </div>
         </div>
         <!-- Bootstrap Table with Header - Footer -->

@@ -28,9 +28,7 @@ class SavingController extends Controller
     public function index()
     {
         // Get all categories
-        $savings = $this->savingRepository->all();
-
-        return view('pages.savings.index', compact('savings'));
+        return view('pages.savings.index');
     }
 
     /**

@@ -4,7 +4,7 @@ namespace App\Repositories\Contracts\Saving;
 
 interface SavingRepositoryInterface
 {
-    public function all();
+    public function all($search, $sortColumn, $sortDirection);
     public function create($data);
     public function find($id);
     public function update($data, $id);

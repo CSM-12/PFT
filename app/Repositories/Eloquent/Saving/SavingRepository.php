@@ -9,10 +9,17 @@ use Illuminate\Support\Facades\Auth;
 class SavingRepository implements SavingRepositoryInterface
 {
     // Get all categories
-    public function all()
+    public function all($search, $sortColumn, $sortDirection)
     {
         return Saving::where('user_id', Auth::id())
-            ->get(['id', 'title', 'description', 'target_amount', 'target_date', 'platform', 'created_at']);
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('target_amount', 'like', "%$search%")
+                    ->orWhere('platform', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'target_amount', 'target_date', 'platform', 'created_at']);
     }
 
     // Create a category
