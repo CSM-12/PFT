@@ -10,6 +10,6 @@ interface SavingRepositoryInterface
     public function update($data, $id);
     public function destroy($id);
     public function trash($id);
-    public function trashed();
+    public function trashed($search, $sortColumn, $sortDirection);
     public function restore($id);
 }

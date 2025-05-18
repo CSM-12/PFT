@@ -27,8 +27,21 @@ class SavingController extends Controller
      */
     public function index()
     {
-        // Get all categories
-        return view('pages.savings.index');
+        try {
+            // Get all categories
+            return view('pages.savings.index');
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error fetching savings: " . $e->getMessage());
+
+            // Prepare alert message
+            session()->flash('alerts', [
+                'error' => ['Something went wrong while Showing savings!']
+            ]);
+
+            // Return to games index page
+            return redirect()->back();
+        }
     }
 
     /**
@@ -234,11 +247,8 @@ class SavingController extends Controller
     public function trashed()
     {
         try {
-            // Trash Category
-            $savings = $this->savingRepository->trashed();
-
             // Return trashed games view
-            return view('pages.savings.trashed', compact('savings'));
+            return view('pages.savings.trashed');
         } catch (\Exception $e) {
             // Log error message
             Log::error("Error fetching trashed savings: " . $e->getMessage());

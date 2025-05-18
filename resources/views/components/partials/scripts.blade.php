@@ -58,6 +58,16 @@
     });
 </script>
 
+{{-- Scroll breadcrumb to the end --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const el = document.querySelector('.breadcrumb-container');
+        if (el) {
+            el.scrollLeft = el.scrollWidth;
+        }
+    });
+</script>
+
 
 {{-- Livewire script --}}
 @livewireScripts

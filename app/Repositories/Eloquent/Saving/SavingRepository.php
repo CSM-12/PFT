@@ -58,10 +58,18 @@ class SavingRepository implements SavingRepositoryInterface
     }
 
     // All trashed categories
-    public function trashed()
+    public function trashed($search, $sortColumn, $sortDirection)
     {
         // Fetch all trashed categories
-        return $trashedGames = Saving::onlyTrashed()->get();
+        return $trashedGames = Saving::onlyTrashed()
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('target_amount', 'like', "%$search%")
+                    ->orWhere('platform', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'target_amount', 'target_date', 'platform', 'created_at']);
     }
 
     // Restore trashed category
