@@ -11,15 +11,29 @@ use Illuminate\Support\Facades\Auth;
 
 class TransactionRepository implements TransactionRepositoryInterface
 {
-    // Get all transactions
-    public function all()
+    public function all($search, $sortColumn, $sortDirection)
     {
-        $user_id = Auth::id();
-
-        return Transaction::where('user_id', $user_id)
+        // transactions
+        $transactions = Transaction::where('user_id', Auth::id())
             ->with('category:id,title')
-            ->get(['id', 'category_type', 'category_id', 'title', 'description', 'amount', 'direction', 'status', 'created_at']);
+            ->where(function ($query) use ($search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', "%$search%")
+                        ->orWhere('description', 'like', "%$search%")
+                        ->orWhere('amount', 'like', "%$search%")
+                        ->orWhere('status', 'like', "%$search%")
+                        ->orWhere('created_at', 'like', "%$search%");
+                    })
+                    ->orWhereHas('category', function ($query) use ($search) {
+                        $query->where('title', 'like', "%$search%");
+                    });
+                })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'category_type', 'category_id', 'title', 'description', 'amount', 'direction', 'status', 'created_at']);
+        
+        return $transactions;
     }
+
 
     // Create a category
     public function create($data)
@@ -118,10 +132,21 @@ class TransactionRepository implements TransactionRepositoryInterface
     }
 
     // All trashed categories
-    public function trashed()
+    public function trashed($search, $sortColumn, $sortDirection)
     {
         // Trashed transactions
-        $transactions = Transaction::onlyTrashed()->get();
+        $transactions = Transaction::onlyTrashed()
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('amount', 'like', "%$search%")
+                    ->orWhere('status', 'like', "%$search%")
+                    ->orWhere('created_at', 'like', "%$search%")
+                    ->orWhere('category_type', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'category_type', 'category_id', 'title', 'description', 'amount', 'direction', 'status', 'created_at']);
+        
         return $transactions;
     }
 

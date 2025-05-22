@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Livewire\Tables;
+namespace App\Livewire\Tables\Transactions;
 
-use App\Models\Saving\Saving;
-use App\Repositories\Eloquent\Saving\SavingRepository;
+use App\Repositories\Eloquent\Transaction\TransactionRepository;
 use Livewire\Component;
+use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
 
-class SavingTable extends Component
+class Index extends Component
 {
-    use WithPagination;
+    use WithPagination, WithoutUrlPagination;
 
+    protected $paginationTheme = 'bootstrap';
+
+    public $limit = 10;
     public $search = '';
     public $sortColumn = 'id';
     public $sortDirection = 'asc';
@@ -18,7 +21,7 @@ class SavingTable extends Component
     protected $repository;
 
     // Inject savings repository
-    public function boot(SavingRepository $repository)
+    public function boot(TransactionRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -26,10 +29,10 @@ class SavingTable extends Component
     public function render()
     {
         $query = $this->repository->all($this->search, $this->sortColumn, $this->sortDirection);
-        $savings = $query->paginate(1);
+        $transactions = $query->paginate($this->limit)->withQueryString();
 
-        return view('livewire.tables.saving-table', [
-            'savings' => $savings
+        return view('livewire.tables.transactions.index', [
+            'transactions' => $transactions
         ]);
     }
 
@@ -44,7 +47,13 @@ class SavingTable extends Component
         }
     }
 
-    // Searching function
+    // Updating limit
+    public function updatingLimit()
+    {
+        $this->resetPage();
+    }
+
+    // updating search
     public function updatingSearch()
     {
         $this->resetPage();

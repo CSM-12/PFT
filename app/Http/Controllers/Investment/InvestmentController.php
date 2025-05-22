@@ -27,10 +27,21 @@ class InvestmentController extends Controller
      */
     public function index()
     {
-        // Get all categories
-        $investments = $this->investmentRepository->all();
+        try {
+            // Get all investments
+            return view('pages.investments.index');
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error fetching investments: " . $e->getMessage());
 
-        return view('pages.investments.index', compact('investments'));
+            // Prepare alert message
+            session()->flash('alerts', [
+                'error' => ['Something went wrong while showing investments!']
+            ]);
+
+            // Return to games index page
+            return redirect()->back();
+        }
     }
 
     /**
@@ -236,18 +247,15 @@ class InvestmentController extends Controller
     public function trashed()
     {
         try {
-            // Trash Category
-            $investments = $this->investmentRepository->trashed();
-
-            // Return trashed games view
-            return view('pages.investments.trashed', compact('investments'));
+            // Return trashed investments view
+            return view('pages.investments.trashed');
         } catch (\Exception $e) {
             // Log error message
-            Log::error("Error fetching trashed investents: " . $e->getMessage());
+            Log::error("Error fetching trashed investments: " . $e->getMessage());
 
             // Prepare alert message
             session()->flash('alerts', [
-                'error' => ['Something went wrong while Showing trashed investents!']
+                'error' => ['Something went wrong while Showing trashed investments!']
             ]);
 
             // Return to games index page

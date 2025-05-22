@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Tables\Savings;
+namespace App\Livewire\Tables\Investments;
 
-use App\Repositories\Eloquent\Saving\SavingRepository;
+use App\Repositories\Eloquent\Investment\InvestmentRepository;
 use Livewire\Component;
 use Livewire\WithoutUrlPagination;
 use Livewire\WithPagination;
@@ -21,7 +21,7 @@ class Index extends Component
     protected $repository;
 
     // Inject savings repository
-    public function boot(SavingRepository $repository)
+    public function boot(InvestmentRepository $repository)
     {
         $this->repository = $repository;
     }
@@ -29,10 +29,10 @@ class Index extends Component
     public function render()
     {
         $query = $this->repository->all($this->search, $this->sortColumn, $this->sortDirection);
-        $savings = $query->paginate($this->limit)->withQueryString();
+        $investments = $query->paginate($this->limit)->withQueryString();
 
-        return view('livewire.tables.savings.index', [
-            'savings' => $savings
+        return view('livewire.tables.investments.index', [
+            'investments' => $investments
         ]);
     }
 

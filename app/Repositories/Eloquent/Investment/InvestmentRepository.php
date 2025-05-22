@@ -9,10 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class InvestmentRepository implements InvestmentRepositoryInterface
 {
     // Get all categories
-    public function all()
+    public function all($search, $sortColumn, $sortDirection)
     {
         return Investment::where('user_id', Auth::id())
-            ->get(['id', 'title', 'description', 'investment_category', 'created_at']);
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'investment_category', 'created_at']);
     }
 
     // Create a category
@@ -51,10 +56,16 @@ class InvestmentRepository implements InvestmentRepositoryInterface
     }
 
     // All trashed categories
-    public function trashed()
+    public function trashed($search, $sortColumn, $sortDirection)
     {
         // Fetch all trashed categories
-        return $trashedGames = Investment::onlyTrashed()->get();
+        return $trashedGames = Investment::onlyTrashed()
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'investment_category', 'created_at']);
     }
 
     // Restore trashed category

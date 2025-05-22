@@ -14,108 +14,54 @@
 {{-- Page content --}}
 @section('page-content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <div class="w-100 d-flex justify-content-between align-items-center">
-            {{-- Page Title --}}
-            <h4 class="fw-bold py-3 mb-4">Transactions</h4>
+        {{-- Breadcrumb --}}
+        <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions']]" />
 
-            <div>
-                {{-- Add transaction button --}}
-                <a href="{{ route('transactions.create') }}">
-                    <button class="d-none d-sm-inline-block btn btn-primary fw-bold mx-2">
-                        Add
-                    </button>
-
-                    <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-primary mx-2">
-                        <span class="tf-icons bx bx-plus"></span>
-                    </button>
-                </a>
-
-                {{-- View Categories --}}
-                <a href="{{ route('transactions.categories.index') }}">
-                    <button class="d-none d-sm-inline-block btn btn-success fw-bold mx-2">
-                        Categories
-                    </button>
-
-                    <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-success mx-2">
-                        <i class='bx bx-category'></i>
-                    </button>
-                </a>
-
-                {{-- Trashed transactions button --}}
-                <a href="{{ route('transactions.trashed') }}">
-                    <button class="d-none d-sm-inline-block btn btn-danger fw-bold mx-2">
-                        Trashed
-                    </button>
-
-                    <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-danger mx-2">
-                        <span class="tf-icons bx bx-time"></span>
-                    </button>
-                </a>
-            </div>
-
-        </div>
-
-        <!-- Bootstrap Table with Header - Footer -->
+        {{-- Table container --}}
         <div class="card">
-            <h5 class="card-header">Table Header & Footer</h5>
-            <div class="table-responsive text-nowrap">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Amount</th>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>Status</th>
-                            <th>Created</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($transactions as $transaction)
-                            <tr>
-                                <td>{{ $transaction->title }}</td>
-                                <td>{{ $transaction->amount }}</td>
-                                <td>{{ $transaction->display_category_type }}</td>
-                                <td>{{ $transaction->category->title ?? 'No Category' }}</td>
+            <div class="w-100 d-flex justify-content-between align-items-center">
+                {{-- Page Title --}}
+                <h5 class="card-header">Transactions</h5>
 
-                                {{-- Status --}}
-                                <td>
-                                    @if ($transaction->status == 'completed')
-                                        <span class="badge bg-label-success me-1">Complete</span>
-                                    @elseif ($transaction->status == 'pending')
-                                        <span class="badge bg-label-warning me-1">Pending</span>
-                                    @else
-                                        <span class="badge bg-label-danger me-1">Failed</span>
-                                    @endif
-                                </td>
+                <div>
+                    {{-- Add transaction button --}}
+                    <a href="{{ route('transactions.create') }}">
+                        <button class="d-none d-sm-inline-block btn btn-primary fw-bold mx-2">
+                            Add
+                        </button>
 
-                                {{-- Created --}}
-                                <td>{{ $transaction->display_created_at }}</td>
+                        <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-primary mx-2">
+                            <span class="tf-icons bx bx-plus"></span>
+                        </button>
+                    </a>
 
-                                {{-- Actions --}}
-                                <td>
-                                    {{-- Edit transaction --}}
-                                    <a href="{{ route('transactions.edit', $transaction->id) }}">
-                                        <button class="btn btn-warning"><i class="bx bx-pencil"></i></button>
-                                    </a>
+                    {{-- View Categories --}}
+                    <a href="{{ route('transactions.categories.index') }}">
+                        <button class="d-none d-sm-inline-block btn btn-success fw-bold mx-2">
+                            Categories
+                        </button>
 
-                                    {{-- Trash transaction --}}
-                                    <form method="POST" action="{{ route('transaction.trash', $transaction->id) }}" style="display: inline;">
-                                        @csrf
-                                        @method('PATCH')
+                        <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-success mx-2">
+                            <i class='bx bx-category'></i>
+                        </button>
+                    </a>
 
-                                        <button class="btn btn-danger"><i class="bx bx-trash"></i></button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    {{-- Trashed transactions button --}}
+                    <a href="{{ route('transactions.trashed') }}">
+                        <button class="d-none d-sm-inline-block btn btn-danger fw-bold mx-2">
+                            Trashed
+                        </button>
+
+                        <button type="button" class="d-inline-block d-sm-none btn btn-icon btn-outline-danger mx-2">
+                            <span class="tf-icons bx bx-time"></span>
+                        </button>
+                    </a>
+                </div>
+
             </div>
+
+            {{-- Transactions data table --}}
+            <livewire:tables.transactions.index />
         </div>
-        <!-- Bootstrap Table with Header - Footer -->
-
-
     </div>
 @endsection

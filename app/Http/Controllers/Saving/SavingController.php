@@ -247,7 +247,7 @@ class SavingController extends Controller
     public function trashed()
     {
         try {
-            // Return trashed games view
+            // Return trashed savings view
             return view('pages.savings.trashed');
         } catch (\Exception $e) {
             // Log error message
