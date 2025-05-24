@@ -16,7 +16,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         
         {{-- Breadcrumb --}}
-        <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions', route('transactions.index')], ['Transaction Categories']]" />
+        <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions', route('transactions.index')], ['Trash']]" />
 
         <!-- Trashed transaction table -->
         <div class="card">

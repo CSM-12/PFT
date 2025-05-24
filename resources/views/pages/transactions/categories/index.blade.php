@@ -17,7 +17,7 @@
         {{-- Breadcrumb --}}
         <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions', route('transactions.index')], ['Transactions Categories']]" />
 
-        <!-- Bootstrap Table with Header - Footer -->
+        <!-- Transaction categories table -->
         <div class="card">
             <div class="w-100 d-flex justify-content-between align-items-center">
                 {{-- Page Title --}}

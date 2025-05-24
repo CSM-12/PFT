@@ -15,8 +15,8 @@
 @section('page-content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="w-100 d-flex justify-content-between align-items-center">
-            {{-- Page Title --}}
-            <h4 class="fw-bold py-3 mb-4">Add Transactions</h4>
+            {{-- Breadcrumb --}}
+            <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions', route('transactions.index')], ['Create']]" />
         </div>
 
         <div class="row">

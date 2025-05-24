@@ -116,4 +116,9 @@
             </tbody>
         </table>
     </div>
+
+    {{-- Paginations --}}
+    <div class="mt-2 p-2">
+        {{ $transactions->links() }}
+    </div>
 </div>

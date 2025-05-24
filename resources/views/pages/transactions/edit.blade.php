@@ -15,8 +15,8 @@
 @section('page-content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="w-100 d-flex justify-content-between align-items-center">
-            {{-- Page Title --}}
-            <h4 class="fw-bold py-3 mb-4">Edit Transactions</h4>
+            {{-- Breadcrumb --}}
+            <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Transactions', route('transactions.index')], ['Edit']]" />
         </div>
 
         <div class="row">
@@ -39,8 +39,8 @@
                                         <span id="basic-icon-default-fullname2" class="input-group-text">
                                             <i class="bx bx-rupee"></i>
                                         </span>
-                                        <input type="number" name="amount" class="form-control currency-input" placeholder="Amount"
-                                            aria-label="Amount" aria-describedby="transaction-amount"
+                                        <input type="number" name="amount" class="form-control currency-input"
+                                            placeholder="Amount" aria-label="Amount" aria-describedby="transaction-amount"
                                             value="{{ $transaction->amount }}" />
                                     </div>
 
@@ -85,8 +85,8 @@
                                     <x-input-error :errors="$errors" :field="'description'"></x-input-error>
                                 </div>
                             </div>
-                            
-                            {{-- Category Livewire Component--}}
+
+                            {{-- Category Livewire Component --}}
                             <livewire:forms.category-select :type="$transaction->category_type" :category_id="$transaction->category_id" :direction="$transaction->direction" />
 
                             {{-- Status --}}

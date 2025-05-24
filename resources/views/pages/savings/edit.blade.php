@@ -16,8 +16,8 @@
     <!-- Add transaction category form -->
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="w-100 d-flex justify-content-between align-items-center">
-            {{-- Page Title --}}
-            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Savings /</span> Edit Saving Plan</h4>
+            {{-- Breadcrumb --}}
+            <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Savings', route('savings.index')], ['Edit']]" />
         </div>
 
 
@@ -79,9 +79,10 @@
                                             <i class="bx bx-rupee"></i>
                                         </span>
 
-                                        <input type="number" name="target_amount"
-                                            class="form-control currency-input" id="basic-icon-default-fullname" placeholder="Amount"
-                                            aria-label="Amount" aria-describedby="basic-icon-default-fullname2" value="{{ $saving->target_amount }}"/>
+                                        <input type="number" name="target_amount" class="form-control currency-input"
+                                            id="basic-icon-default-fullname" placeholder="Amount" aria-label="Amount"
+                                            aria-describedby="basic-icon-default-fullname2"
+                                            value="{{ $saving->target_amount }}" />
                                     </div>
 
                                     {{-- field error --}}
@@ -98,8 +99,8 @@
                                             <i class="bx bx-calendar"></i>
                                         </span>
 
-                                        <input type="date" name="target_date" class="form-control" value="{{ $saving->target_date }}"
-                                            id="html5-date-input" />
+                                        <input type="date" name="target_date" class="form-control"
+                                            value="{{ $saving->target_date }}" id="html5-date-input" />
                                     </div>
 
                                     {{-- field error --}}
@@ -118,8 +119,8 @@
                                                 class="bx bx-bank"></i></span>
                                         <input type="text" name="platform" class="form-control"
                                             id="basic-icon-default-fullname" placeholder="Bank, Gold, locker"
-                                            aria-label="Bank, Gold, locker"
-                                            aria-describedby="basic-icon-default-fullname2" value="{{ $saving->platform }}"/>
+                                            aria-label="Bank, Gold, locker" aria-describedby="basic-icon-default-fullname2"
+                                            value="{{ $saving->platform }}" />
                                     </div>
 
                                     {{-- field error --}}
@@ -139,5 +140,4 @@
             </div>
         </div>
     </div>
-    
 @endsection

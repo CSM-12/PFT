@@ -17,7 +17,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="w-100 d-flex justify-content-between align-items-center">
             {{-- Breadcrumb --}}
-            <x-breadcrumbs :items="[['label' => 'Savings', 'url' => route('savings.index')], ['label' => 'Add Saving']]" />
+            <x-breadcrumbs :items="[['Dashboard', route('dashboard')], ['Savings', route('savings.index')], ['Create']]" />
         </div>
 
 
