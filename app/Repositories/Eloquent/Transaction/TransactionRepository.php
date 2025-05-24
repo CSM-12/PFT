@@ -23,14 +23,14 @@ class TransactionRepository implements TransactionRepositoryInterface
                         ->orWhere('amount', 'like', "%$search%")
                         ->orWhere('status', 'like', "%$search%")
                         ->orWhere('created_at', 'like', "%$search%");
-                    })
+                })
                     ->orWhereHas('category', function ($query) use ($search) {
                         $query->where('title', 'like', "%$search%");
                     });
-                })
+            })
             ->orderBy($sortColumn, $sortDirection)
             ->select(['id', 'category_type', 'category_id', 'title', 'description', 'amount', 'direction', 'status', 'created_at']);
-        
+
         return $transactions;
     }
 
@@ -135,18 +135,23 @@ class TransactionRepository implements TransactionRepositoryInterface
     public function trashed($search, $sortColumn, $sortDirection)
     {
         // Trashed transactions
-        $transactions = Transaction::onlyTrashed()
+        $transactions = Transaction::where('user_id', Auth::id())
+            ->onlyTrashed()
+            ->with('category:id,title')
             ->where(function ($query) use ($search) {
-                $query->where('title', 'like', "%$search%")
-                    ->orWhere('description', 'like', "%$search%")
-                    ->orWhere('amount', 'like', "%$search%")
-                    ->orWhere('status', 'like', "%$search%")
-                    ->orWhere('created_at', 'like', "%$search%")
-                    ->orWhere('category_type', 'like', "%$search%");
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', "%$search%")
+                        ->orWhere('amount', 'like', "%$search%")
+                        ->orWhere('status', 'like', "%$search%")
+                        ->orWhere('created_at', 'like', "%$search%");
+                })
+                    ->orWhereHas('category', function ($query) use ($search) {
+                        $query->where('title', 'like', "%$search%");
+                    });
             })
             ->orderBy($sortColumn, $sortDirection)
-            ->select(['id', 'category_type', 'category_id', 'title', 'description', 'amount', 'direction', 'status', 'created_at']);
-        
+            ->select(['id', 'category_type', 'category_id', 'title', 'amount', 'direction', 'status', 'created_at']);
+
         return $transactions;
     }
 

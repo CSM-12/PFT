@@ -26,10 +26,4 @@ class TransactionCategory extends Model
     {
         return $this->morphMany(Transaction::class, 'category');
     }
-
-    // Format output date for display
-    public function getCreatedAtAttribute($value)
-    {
-        return Carbon::parse($value)->format('d M Y'); // Formats as "04 Feb 2025"
-    }
 }

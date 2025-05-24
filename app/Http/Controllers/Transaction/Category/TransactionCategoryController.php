@@ -26,11 +26,21 @@ class TransactionCategoryController extends Controller
      */
     public function index()
     {
-        // Get all categories
-        $categories = $this->transactionCategoryRepository->all();
+        try {
+            // Get all investments
+            return view('pages.transactions.categories.index');
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error fetching transactions categories: " . $e->getMessage());
 
-        // Return view with categories
-        return view('pages.transactions.categories.index', compact('categories'));
+            // Prepare alert message
+            session()->flash('alerts', [
+                'error' => ['Something went wrong while showing transactions categories!']
+            ]);
+
+            // Return to games index page
+            return redirect()->back();
+        }
     }
 
     /**
@@ -219,18 +229,15 @@ class TransactionCategoryController extends Controller
     public function trashed()
     {
         try {
-            // Trash Category
-            $categories = $this->transactionCategoryRepository->trashed();
-
             // Return trashed games view
-            return view('pages.transactions.categories.trashed', compact('categories'));
+            return view('pages.transactions.categories.trashed');
         } catch (\Exception $e) {
             // Log error message
             Log::error("Error fetching trashed transaction categories: " . $e->getMessage());
 
             // Prepare alert message
             session()->flash('alerts', [
-                'error' => ['Something went wrong while Showing trashed categories!']
+                'danger' => ['Something went wrong while Showing trashed transaction categories!']
             ]);
 
             // Return to games index page

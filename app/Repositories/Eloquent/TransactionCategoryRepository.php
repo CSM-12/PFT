@@ -9,9 +9,16 @@ use Illuminate\Support\Facades\Auth;
 class TransactionCategoryRepository implements TransactionCategoryRepositoryInterface
 {
     // Get all categories
-    public function all()
+    public function all($search, $sortColumn, $sortDirection)
     {
-        return TransactionCategory::all(['id', 'title', 'description', 'created_at']);
+        return TransactionCategory::where('user_id', Auth::id())
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('created_at', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'created_at']);
     }
 
     // Create a category
@@ -19,7 +26,7 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     {
         // User ID
         $data['user_id'] = Auth::id();
-        
+
         return TransactionCategory::create($data);
     }
 
@@ -50,10 +57,19 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     }
 
     // All trashed categories
-    public function trashed()
+    public function trashed($search, $sortColumn, $sortDirection)
     {
-        // Fetch all trashed categories
-        return $trashedGames = TransactionCategory::onlyTrashed()->get();
+        $categories = TransactionCategory::where('user_id', Auth::id())
+            ->onlyTrashed()
+            ->where(function ($query) use ($search) {
+                $query->where('title', 'like', "%$search%")
+                    ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('created_at', 'like', "%$search%");
+            })
+            ->orderBy($sortColumn, $sortDirection)
+            ->select(['id', 'title', 'description', 'created_at']);
+
+        return $categories;
     }
 
     // Restore trashed category
