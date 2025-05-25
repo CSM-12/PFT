@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('icon', 100)->nullable()->uniqid();
             $table->string('title',100)->unique();
             $table->text('description', 500)->nullable();
+            $table->decimal('budget', 15, 2)->nullable();
+            $table->enum('period', ['daily', 'weekly', 'monthly', 'quarterly', 'yearly', 'undefined'])->default('undefined');
             $table->timestamps();
             $table->softDeletes();
 

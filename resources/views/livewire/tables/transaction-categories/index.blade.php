@@ -37,6 +37,18 @@
                         <x-sorting column="description" :sortColumn="$sortColumn" :sortDirection="$sortDirection" />
                     </th>
 
+                    {{-- Budget --}}
+                    <th wire:click="sortBy('budget')" class="cursor-pointer">
+                        Budget
+                        <x-sorting column="budget" :sortColumn="$sortColumn" :sortDirection="$sortDirection" />
+                    </th>
+
+                    {{-- Period --}}
+                    <th wire:click="sortBy('period')" class="cursor-pointer">
+                        Period
+                        <x-sorting column="period" :sortColumn="$sortColumn" :sortDirection="$sortDirection" />
+                    </th>
+
                     {{-- Created at --}}
                     <th wire:click="sortBy('created_at')" class="cursor-pointer">
                         Created
@@ -56,7 +68,10 @@
                         </td>
                         <td>{{ $category->title }}</td>
                         <td><span class="d-inline-block text-truncate"
-                                style="max-width: 150px;">{{ $category->description }}</span></td>
+                                style="max-width: 150px;">{{ $category->description }}</span>
+                        </td>
+                        <td>{{ $category->budget }}</td>       
+                        <td>{{ $category->period }}</td>       
                         <td><span>{{ $category->created_at->format('d M Y') }}</span></td>
                         <td>
                             <a href="{{ route('transactions.categories.edit', $category->id) }}">

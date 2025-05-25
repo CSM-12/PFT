@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Transaction\Category;
 
+use App\Enums\TransactionCategory\Period;
 use App\Rules\ValidIcon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class UpdateTransactionCategoryRequest extends FormRequest
 {
@@ -32,7 +34,7 @@ class UpdateTransactionCategoryRequest extends FormRequest
                 // Unique icon
                 Rule::unique('transaction_categories')->where(function ($query) {
                     return $query->where('user_id', Auth::id());
-                })->ignore($this->route('investmen')),
+                })->ignore($this->route('category')),
 
                 // Valid icon 
                 new ValidIcon
@@ -46,7 +48,17 @@ class UpdateTransactionCategoryRequest extends FormRequest
                     return $query->where('user_id', Auth::id());
                 })->ignore($this->route('category'))
             ],
-            'description' => 'max:500'
+            'description' => [
+                'max:500'
+            ],
+            'budget' => [
+                'numeric',
+                'min:0.01'
+            ],
+            'period' => [
+                'required',
+                new Enum(Period::class)
+            ]
         ];
     }
 

@@ -32,7 +32,7 @@ class UpdateInvestmentRequest extends FormRequest
                 // Unique icon
                 Rule::unique('investments')->where(function ($query) {
                     return $query->where('user_id', Auth::id());
-                })->ignore($this->route('investmen')),
+                })->ignore($this->route('investment')),
 
                 // Valid icon 
                 new ValidIcon

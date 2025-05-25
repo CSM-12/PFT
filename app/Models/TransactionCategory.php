@@ -2,11 +2,11 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionCategory\Period;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class TransactionCategory extends Model
@@ -18,7 +18,9 @@ class TransactionCategory extends Model
         'user_id',
         'icon',
         'title',
-        'description'
+        'description',
+        'budget',
+        'period'
     ];
 
     // Polymorphic relation with transactions
@@ -26,4 +28,9 @@ class TransactionCategory extends Model
     {
         return $this->morphMany(Transaction::class, 'category');
     }
+
+    // Cating enum for period
+    protected $casts = [
+        'budget_period' => Period::class,
+    ];
 }

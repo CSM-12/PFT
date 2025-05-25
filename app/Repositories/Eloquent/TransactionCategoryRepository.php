@@ -15,10 +15,12 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
             ->where(function ($query) use ($search) {
                 $query->where('title', 'like', "%$search%")
                     ->orWhere('description', 'like', "%$search%")
+                    ->orWhere('budget', 'like', "%$search%")
+                    ->orWhere('period', 'like', "%$search%")
                     ->orWhere('created_at', 'like', "%$search%");
             })
             ->orderBy($sortColumn, $sortDirection)
-            ->select(['id', 'title', 'description', 'created_at']);
+            ->select(['id', 'title', 'description', 'budget', 'period', 'created_at']);
     }
 
     // Create a category
@@ -33,7 +35,7 @@ class TransactionCategoryRepository implements TransactionCategoryRepositoryInte
     // Get a category by ID
     public function find($id)
     {
-        return TransactionCategory::select('id', 'icon', 'title', 'description')->findOrFail($id);
+        return TransactionCategory::select('id', 'icon', 'title', 'description', 'budget', 'period')->findOrFail($id);
     }
 
     // Update a category

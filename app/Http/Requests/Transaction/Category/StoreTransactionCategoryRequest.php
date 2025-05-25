@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Transaction\Category;
 
+use App\Enums\TransactionCategory\Period;
 use App\Rules\ValidIcon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 
 class StoreTransactionCategoryRequest extends FormRequest
 {
@@ -48,6 +50,14 @@ class StoreTransactionCategoryRequest extends FormRequest
             ],
             'description' => [
                 'max:500'
+            ],
+            'budget' => [
+                'numeric',
+                'min:0.01'
+            ],
+            'period' => [
+                'required',
+                new Enum(Period::class)
             ]
         ];
     }
