@@ -52,6 +52,7 @@ class StoreTransactionCategoryRequest extends FormRequest
                 'max:500'
             ],
             'budget' => [
+                'nullable',
                 'numeric',
                 'min:0.01'
             ],

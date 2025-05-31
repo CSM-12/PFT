@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\Investment\InvestmentRepositoryInterface;
+use App\Repositories\Contracts\Dashboard\Charts\TransactionChartRepositoryInterface;
 use App\Repositories\Contracts\TransactionCategoryRepositoryInterface;
 use App\Repositories\Eloquent\TransactionCategoryRepository;
 
 use App\Repositories\Contracts\Saving\SavingRepositoryInterface;
 use App\Repositories\Contracts\Transaction\TransactionRepositoryInterface;
 use App\Repositories\Eloquent\Investment\InvestmentRepository;
+use App\Repositories\Eloquent\Dashboard\Charts\TransactionChartRepository;
 use App\Repositories\Eloquent\Saving\SavingRepository;
 use App\Repositories\Eloquent\Transaction\TransactionRepository;
 use Illuminate\Support\ServiceProvider;
@@ -31,6 +33,12 @@ class AppServiceProvider extends ServiceProvider
 
         // Bind the InvestmentRepositoryInterface to the InvestmentRepository
         $this->app->singleton(InvestmentRepositoryInterface::class, InvestmentRepository::class);
+    
+    
+        // Dashboard Charts
+        
+        // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
+        $this->app->bind(TransactionChartRepositoryInterface::class, TransactionChartRepository::class);
     }
 
     /**
