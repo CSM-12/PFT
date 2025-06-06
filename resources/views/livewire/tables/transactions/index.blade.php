@@ -80,7 +80,7 @@
                         </td>
 
                         {{-- Created --}}
-                        <td>{{ $transaction->display_created_at }}</td>
+                        <td>{{ $transaction->created_at->format('d M Y') }}</td>
 
                         {{-- Actions --}}
                         <td>

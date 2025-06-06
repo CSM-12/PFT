@@ -118,6 +118,14 @@
                                 <x-input-error :errors="$errors" :field="'status'"></x-input-error>
                             </div>
 
+                            {{-- Created at --}}
+                            <div class="row mb-3">
+                                <label for="created_at" class="col-md-2 col-form-label">Datetime</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="datetime-local" name="created_at"
+                                        value="{{ $transaction->created_at }}" id="html5-datetime-local-input" />
+                                </div>
+                            </div>
 
                             {{-- Submit button --}}
                             <div class="row justify-content-end">

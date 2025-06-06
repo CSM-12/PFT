@@ -22,6 +22,7 @@ class Transaction extends Model
         'amount',
         'direction',
         'status',
+        'created_at'
     ];
 
     // Polymorphic relation with transaction categories, savings and investments

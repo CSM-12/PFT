@@ -9,17 +9,22 @@
                     <i class="bx bx-dots-vertical-rounded"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="transactionID">
-                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('today')">Today</a>
-                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_week')">This Week</a>
-                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_month')">This Month</a>
-                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_quarter')">This Quarter</a>
-                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_year')">This Year</a>
+                    <a class="dropdown-item" href="javascript:void(0);"
+                        wire:click.prevent="setPeriod('today')">Today</a>
+                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_week')">This
+                        Week</a>
+                    <a class="dropdown-item" href="javascript:void(0);"
+                        wire:click.prevent="setPeriod('this_month')">This Month</a>
+                    <a class="dropdown-item" href="javascript:void(0);"
+                        wire:click.prevent="setPeriod('this_quarter')">This Quarter</a>
+                    <a class="dropdown-item" href="javascript:void(0);" wire:click.prevent="setPeriod('this_year')">This
+                        Year</a>
                 </div>
             </div>
         </div>
         <div class="card-body">
             <ul class="p-0 m-0">
-                @foreach ($transactions as $transaction)
+                @forelse ($transactions as $transaction)
                     <li class="d-flex mb-4 pb-1">
                         <div class="avatar flex-shrink-0 me-3">
                             <span class="avatar-initial rounded bg-label-primary"><i
@@ -36,7 +41,11 @@
                             </div>
                         </div>
                     </li>
-                @endforeach
+                @empty
+                    <li>
+                        <span class="w-100">No Transactions Yet!</span>
+                    </li>
+                @endforelse
             </ul>
         </div>
     </div>

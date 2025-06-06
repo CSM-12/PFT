@@ -38,8 +38,9 @@
                                         <span id="basic-icon-default-fullname2" class="input-group-text">
                                             <i class="bx bx-rupee"></i>
                                         </span>
-                                        <input type="number" name="amount" class="form-control currency-input" placeholder="Amount"
-                                            aria-label="Amount" aria-describedby="transaction-amount"  />
+                                        <input type="number" name="amount" class="form-control currency-input"
+                                            placeholder="Amount" aria-label="Amount"
+                                            aria-describedby="transaction-amount" />
                                     </div>
 
                                     {{-- field error --}}
@@ -93,13 +94,13 @@
                                 <div class="col-sm-10">
                                     <div>
                                         {{-- Transactions --}}
-                                        <input type="radio" class="btn-check" name="status" id="completed" value="completed"
-                                            autocomplete="off" checked>
+                                        <input type="radio" class="btn-check" name="status" id="completed"
+                                            value="completed" autocomplete="off" checked>
                                         <label class="btn btn-outline-success" for="completed">Complete</label>
 
                                         {{-- Pending --}}
-                                        <input type="radio" class="btn-check" name="status" id="pending" value="pending"
-                                            autocomplete="off">
+                                        <input type="radio" class="btn-check" name="status" id="pending"
+                                            value="pending" autocomplete="off">
                                         <label class="btn btn-outline-warning" for="pending">Pending</label>
 
                                         {{-- Failed --}}
@@ -111,6 +112,15 @@
 
                                 {{-- field error --}}
                                 <x-input-error :errors="$errors" :field="'status'"></x-input-error>
+                            </div>
+
+                            {{-- Created at --}}
+                            <div class="row mb-3">
+                                <label for="created_at" class="col-md-2 col-form-label">Datetime</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" type="datetime-local" name="created_at" value="{{ now()->format('Y-m-d\TH:i') }}"
+                                        id="html5-datetime-local-input" />
+                                </div>
                             </div>
 
 
