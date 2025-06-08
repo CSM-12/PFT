@@ -325,6 +325,7 @@
 
             <!-- Expense Overview -->
             <livewire:dashboard.charts.semester-transactions />
+            
             <!--/ Expense Overview -->
 
             <!-- Transactions -->

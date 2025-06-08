@@ -4,5 +4,7 @@ namespace App\Repositories\Contracts\Dashboard\Charts;
 
 interface SemesterTransactionChartRepositoryInterface
 {
-    public function index();
+    public function income();
+    public function expense();
+    public function difference();
 }

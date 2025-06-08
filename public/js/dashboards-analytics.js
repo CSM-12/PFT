@@ -494,8 +494,8 @@
     incomeChartConfig = {
       series: [
         {
-          // data: [24, 21, 30, 22, 42, 26, 35, 29]
-          data: window.Semester_transactions?.data ?? []
+          name: 'Income',
+          data: window.Semester_transactions?.income.data ?? []
         }
       ],
       chart: {
@@ -512,7 +512,8 @@
       },
       stroke: {
         width: 2,
-        curve: 'smooth'
+        curve: 'smooth',
+        colors: [config.colors.success]
       },
       legend: {
         show: false
@@ -537,7 +538,7 @@
           size: 7
         }
       },
-      colors: [config.colors.primary],
+      colors: [config.colors.success],
       fill: {
         type: 'gradient',
         gradient: {
@@ -559,7 +560,7 @@
         }
       },
       xaxis: {
-        categories: window.Semester_transactions?.labels ?? [],
+        categories: window.Semester_transactions?.income.labels ?? [],
         axisBorder: {
           show: false
         },
@@ -578,8 +579,8 @@
         labels: {
           show: false
         },
-        min: Math.min(...(window.Semester_transactions?.data ?? [0])),
-        max: Math.max(...(window.Semester_transactions?.data ?? [0])),
+        min: 0,
+        max: Math.max(10, Math.max(...(window.Semester_transactions?.income.data ?? [0]))),
         tickAmount: 4
       }
     };
@@ -595,8 +596,8 @@
     expenseChartConfig = {
       series: [
         {
-          // data: [24, 21, 30, 22, 42, 26, 35, 29]
-          data: window.Semester_transactions?.data ?? []
+          name: 'Expenses',
+          data: window.Semester_transactions?.expense.data ?? []
         }
       ],
       chart: {
@@ -613,7 +614,8 @@
       },
       stroke: {
         width: 2,
-        curve: 'smooth'
+        curve: 'smooth',
+        colors: [config.colors.danger]
       },
       legend: {
         show: false
@@ -638,7 +640,7 @@
           size: 7
         }
       },
-      colors: [config.colors.primary],
+      colors: [config.colors.danger],
       fill: {
         type: 'gradient',
         gradient: {
@@ -660,7 +662,7 @@
         }
       },
       xaxis: {
-        categories: window.Semester_transactions?.labels ?? [],
+        categories: window.Semester_transactions?.expense.labels ?? [],
         axisBorder: {
           show: false
         },
@@ -679,8 +681,8 @@
         labels: {
           show: false
         },
-        min: Math.min(...(window.Semester_transactions?.data ?? [0])),
-        max: Math.max(...(window.Semester_transactions?.data ?? [0])),
+        min: 0,
+        max: Math.max(...(window.Semester_transactions?.expense.data ?? [0])),
         tickAmount: 4
       }
     };
@@ -690,11 +692,12 @@
     expenseChart.render();
   }
 
+
   // Expenses Mini Chart - Radial Chart
   // --------------------------------------------------------------------
-  const weeklyExpensesEl = document.querySelector('#expensesOfWeek'),
-    weeklyExpensesConfig = {
-      series: [65],
+  const QuaterlyIncomeEl = document.querySelector('#incomeOfQuarter'),
+    QuaterlyIncomeConfig = {
+      series: [Math.abs(window.Semester_transactions?.difference?.income ?? 0)],
       chart: {
         width: 60,
         height: 60,
@@ -720,7 +723,8 @@
             },
             value: {
               formatter: function (val) {
-                return '$' + parseInt(val);
+                // Show + or - sign
+                return '$' + Math.abs(parseInt(val));
               },
               offsetY: 5,
               color: '#697a8d',
@@ -758,8 +762,84 @@
         }
       }
     };
-  if (typeof weeklyExpensesEl !== undefined && weeklyExpensesEl !== null) {
-    const weeklyExpenses = new ApexCharts(weeklyExpensesEl, weeklyExpensesConfig);
-    weeklyExpenses.render();
+  if (typeof QuaterlyIncomeEl !== undefined && QuaterlyIncomeEl !== null) {
+    const QuaterlyIncome = new ApexCharts(QuaterlyIncomeEl, QuaterlyIncomeConfig);
+    QuaterlyIncome.render();
+  }
+
+
+
+  // Expenses Mini Chart - Radial Chart
+  // --------------------------------------------------------------------
+  const QuaterlyExpensesEl = document.querySelector('#expensesOfWeek'),
+    QuaterlyExpensesConfig = {
+      series: [Math.abs(window.Semester_transactions?.difference?.expense ?? 0)],
+      chart: {
+        width: 60,
+        height: 60,
+        type: 'radialBar'
+      },
+      plotOptions: {
+        radialBar: {
+          startAngle: 0,
+          endAngle: 360,
+          strokeWidth: '8',
+          hollow: {
+            margin: 2,
+            size: '45%'
+          },
+          track: {
+            strokeWidth: '50%',
+            background: borderColor
+          },
+          dataLabels: {
+            show: true,
+            name: {
+              show: false
+            },
+            value: {
+              formatter: function (val) {
+                // Show + or - sign
+                return '$' + Math.abs(parseInt(val));
+              },
+              offsetY: 5,
+              color: '#697a8d',
+              fontSize: '13px',
+              show: true
+            }
+          }
+        }
+      },
+      fill: {
+        type: 'solid',
+        colors: config.colors.primary
+      },
+      stroke: {
+        lineCap: 'round'
+      },
+      grid: {
+        padding: {
+          top: -10,
+          bottom: -15,
+          left: -10,
+          right: -10
+        }
+      },
+      states: {
+        hover: {
+          filter: {
+            type: 'none'
+          }
+        },
+        active: {
+          filter: {
+            type: 'none'
+          }
+        }
+      }
+    };
+  if (typeof QuaterlyExpensesEl !== undefined && QuaterlyExpensesEl !== null) {
+    const QuaterlyExpenses = new ApexCharts(QuaterlyExpensesEl, QuaterlyExpensesConfig);
+    QuaterlyExpenses.render();
   }
 })();
