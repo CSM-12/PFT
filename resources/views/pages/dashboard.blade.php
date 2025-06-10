@@ -13,7 +13,6 @@
 
 {{-- Page content --}}
 @section('page-content')
-
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="row">
             <div class="col-lg-8 mb-4 order-0">
@@ -322,10 +321,11 @@
                 </div>
             </div>
             <!--/ Order Statistics -->
+            <livewire:dashboard.charts.transaction-categories />
 
             <!-- Expense Overview -->
             <livewire:dashboard.charts.semester-transactions />
-            
+
             <!--/ Expense Overview -->
 
             <!-- Transactions -->
@@ -333,5 +333,4 @@
             <!--/ Transactions -->
         </div>
     </div>
-    
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Repositories\Contracts\Dashboard\Charts\SemesterTransactionChartRepositoryInterface;
+use App\Repositories\Contracts\Dashboard\Charts\TransactionCategoriesChartRepositoryInterface;
 use App\Repositories\Contracts\Investment\InvestmentRepositoryInterface;
 use App\Repositories\Contracts\Dashboard\Charts\TransactionChartRepositoryInterface;
 use App\Repositories\Contracts\TransactionCategoryRepositoryInterface;
@@ -11,6 +12,7 @@ use App\Repositories\Eloquent\TransactionCategoryRepository;
 use App\Repositories\Contracts\Saving\SavingRepositoryInterface;
 use App\Repositories\Contracts\Transaction\TransactionRepositoryInterface;
 use App\Repositories\Eloquent\Dashboard\Charts\SemesterTransactionChartRepository;
+use App\Repositories\Eloquent\Dashboard\Charts\TransactionCategoriesChartRepository;
 use App\Repositories\Eloquent\Investment\InvestmentRepository;
 use App\Repositories\Eloquent\Dashboard\Charts\TransactionChartRepository;
 use App\Repositories\Eloquent\Saving\SavingRepository;
@@ -38,6 +40,8 @@ class AppServiceProvider extends ServiceProvider
     
     
         // Dashboard Charts
+        // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
+        $this->app->bind(TransactionCategoriesChartRepositoryInterface::class, TransactionCategoriesChartRepository::class);
         
         // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
         $this->app->bind(TransactionChartRepositoryInterface::class, TransactionChartRepository::class);
