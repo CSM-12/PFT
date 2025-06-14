@@ -17,43 +17,63 @@ class TransactionCategoriesChartRepository implements TransactionCategoriesChart
             'this_month'   => Carbon::now()->startOfMonth(),
             'this_quarter' => Carbon::now()->startOfQuarter(),
             'this_year'    => Carbon::now()->startOfYear(),
-            default        => Carbon::now()->startOfMonth(), // fallback
+            default        => Carbon::now()->startOfMonth(),
         };
 
-        // Fetch categories with transaction sum
+        $endDate = Carbon::now()->endOfDay();
+        $userId = Auth::id();
+
+        // Fetch all categories with their amounts
         $categories = TransactionCategory::select('id', 'title', 'icon')
-            ->withSum(['transactions' => function ($query) use ($startDate) {
-                $query->where('category_type', TransactionCategory::class)
-                      ->where('user_id', Auth::id())
-                      ->where('created_at', '>=', $startDate);
+            ->withSum(['transactions as total_amount' => function ($query) use ($userId, $startDate, $endDate) {
+                $query->where('user_id', $userId)
+                    ->whereBetween('created_at', [$startDate, $endDate]);
             }], 'amount')
             ->get()
-            ->map(function ($category) {
-                return [
-                    'id' => $category->id,
-                    'title' => $category->title,
-                    'icon' => $category->icon,
-                    'total_amount' => $category->transactions_sum_amount ?? 0,
-                ];
-            })
+            ->filter(fn($c) => $c->total_amount > 0)
             ->sortByDesc('total_amount')
             ->values();
 
-        // Get top 3
-        $topCategories = $categories->take(3);
+        $totalAmount = $categories->sum('total_amount');
+        $totalCategories = $categories->count();
 
-        // Sum of "others"
-        $othersSum = $categories->skip(3)->sum('total_amount');
+        // Extract top 3
+        $top3 = $categories->take(3);
+        $others = $categories->slice(3);
 
-        if ($categories->count() > 3) {
-            $topCategories->push([
-                'id' => null,
-                'title' => 'Others',
-                'icon' => null,
-                'total_amount' => $othersSum,
+        // Calculate 'Others' total
+        $othersTotal = $others->sum('total_amount');
+
+        // Build formatted response
+        $formatted = $top3->map(function ($category) use ($totalAmount) {
+            return [
+                'id'           => $category->id,
+                'title'        => $category->title,
+                'icon'         => $category->icon,
+                'total_amount' => number_format((float) $category->total_amount, 2, '.', ''),
+                'percentage'   => $totalAmount > 0
+                    ? round(($category->total_amount / $totalAmount) * 100, 2)
+                    : 0,
+            ];
+        });
+
+        // Add 'Others' if there are more than 3
+        if ($othersTotal > 0) {
+            $formatted->push([
+                'id'           => null,
+                'title'        => 'Others',
+                'icon'         => null,
+                'total_amount' => number_format((float) $othersTotal, 2, '.', ''),
+                'percentage'   => $totalAmount > 0
+                    ? round(($othersTotal / $totalAmount) * 100, 2)
+                    : 0,
             ]);
         }
 
-        return $topCategories->values();
+        return [
+            'total_categories' => $totalCategories,
+            'total_amount'     => number_format((float) $totalAmount, 2, '.', ''),
+            'data'             => $formatted->values(),
+        ];
     }
 }

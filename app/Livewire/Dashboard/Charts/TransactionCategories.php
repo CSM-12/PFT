@@ -24,6 +24,8 @@ class TransactionCategories extends Component
 
     public function render()
     {
+        $this->dispatch('transaction-categories-chart-updated');
+        
         return view('livewire.dashboard.charts.transaction-categories', [
             'transactionCategoriesChartData' => $this->transactionCategoriesChartData
         ]);
