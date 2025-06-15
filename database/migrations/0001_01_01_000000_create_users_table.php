@@ -21,6 +21,11 @@ return new class extends Migration
             $table->string('last_name', 50)->nullable();
             $table->enum('role', ['admin', 'manager', 'subscriber', 'user'])->default('user');
             $table->rememberToken();
+            $table->string('phone', 10)->nullable();
+            $table->string('country', 2)->default('IN'); // ISO 3166-1 alpha-2 code
+            $table->string('language', 5)->default('en'); // ISO 639-1 code
+            $table->string('time_zone', 40)->default('Asia/Kolkata'); // IANA timezone
+            $table->string('currency', 3)->default('INR'); // ISO 4217 currency code
             $table->timestamps();
             $table->softDeletes();
         });

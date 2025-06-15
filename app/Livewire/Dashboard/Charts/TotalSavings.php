@@ -16,7 +16,6 @@ class TotalSavings extends Component
 
     public function render()
     {
-        dd($this->totalSavings);
         return view('livewire.dashboard.charts.total-savings', [
             'totalSavings' => $this->totalSavings
         ]);

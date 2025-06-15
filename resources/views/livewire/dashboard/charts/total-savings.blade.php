@@ -1,6 +1,6 @@
 <div class="col-12 mb-4">
 
-    {{ dd($totalSavings) }}
+    {{-- {{ dd($totalSavings) }} --}}
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between flex-sm-row flex-column gap-3">
@@ -10,13 +10,15 @@
                         <span class="badge bg-label-warning rounded-pill">Year 2021</span>
                     </div>
                     <div class="mt-sm-auto">
-                        <small class="text-success text-nowrap fw-semibold"><i class="bx bx-chevron-up"></i>
-                            68.2%</small>
-                        <h3 class="mb-0">$84,686k</h3>
+                        <h3 class="mb-0">${{ $totalSavings['total'] }}</h3>
                     </div>
                 </div>
-                <div id="profileReportChart"></div>
+                <div id="totalSavingsChart"></div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    window.total_savings = @json($totalSavings);    
+</script>

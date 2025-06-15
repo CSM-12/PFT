@@ -216,4 +216,9 @@ class AuthController extends Controller
             return redirect()->back();
         }
     }
+
+    public function updateSettings ()
+    {
+        
+    }
 }

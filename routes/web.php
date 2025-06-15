@@ -56,6 +56,11 @@ Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {
         return view('pages.dashboard');
     })->name('dashboard');
 
+    // Settings
+    Route::get('/settings', function () {
+        return view('pages.settings');
+    })->name('settings');
+
     // transactions
     // ----------------- Transactions Routes Start -----------------
 

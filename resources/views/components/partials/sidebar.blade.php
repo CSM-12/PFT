@@ -89,7 +89,7 @@
             </a>
         </li>
 
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div data-i18n="Account Settings">Account Settings</div>
@@ -106,6 +106,14 @@
                     </a>
                 </li>
             </ul>
+        </li> --}}
+
+        <!-- Settings -->
+        <li class="menu-item {{ request()->routeIs('settings') ? 'active' : '' }}">
+            <a href="{{ route('settings') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-cog"></i>
+                <div data-i18n="Account Settings">Account Settings</div>
+            </a>
         </li>
 
         <!-- Misc -->
@@ -117,13 +125,13 @@
                 <div data-i18n="Support">Support</div>
             </a>
         </li>
-        <li class="menu-item">
+        {{-- <li class="menu-item">
             <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/"
                 target="_blank" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div data-i18n="Documentation">Documentation</div>
             </a>
-        </li>
+        </li> --}}
     </ul>
 </aside>
 <!-- / Menu -->

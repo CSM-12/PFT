@@ -355,13 +355,12 @@
     growthChart.render();
   }
 
-  // Profit Report Line Chart
+  // Total Savings Line Chart
   // --------------------------------------------------------------------
-  const profileReportChartEl = document.querySelector('#profileReportChart'),
-    profileReportChartConfig = {
+  const totalSavingsChartEl = document.querySelector('#totalSavingsChart'),
+    totalSavingsConfig = {
       chart: {
         height: 80,
-        // width: 175,
         type: 'line',
         toolbar: {
           show: false
@@ -394,28 +393,20 @@
       },
       series: [
         {
-          data: [110, 270, 145, 245, 205, 285]
+          name: 'Total Savings',
+          data: Object.values(window.total_savings?.monthly ?? [])
         }
       ],
       xaxis: {
-        show: false,
-        lines: {
-          show: false
-        },
-        labels: {
-          show: false
-        },
-        axisBorder: {
-          show: false
-        }
+        categories: Object.keys(window.total_savings?.monthly ?? {})
       },
       yaxis: {
         show: false
       }
     };
-  if (typeof profileReportChartEl !== undefined && profileReportChartEl !== null) {
-    const profileReportChart = new ApexCharts(profileReportChartEl, profileReportChartConfig);
-    profileReportChart.render();
+  if (typeof totalSavingsChartEl !== undefined && totalSavingsChartEl !== null) {
+    const totalSavingsChart = new ApexCharts(totalSavingsChartEl, totalSavingsConfig);
+    totalSavingsChart.render();
   }
 
   // Order Statistics Chart

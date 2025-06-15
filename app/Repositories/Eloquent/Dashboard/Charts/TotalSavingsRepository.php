@@ -13,36 +13,42 @@ class TotalSavingsRepository implements TotalSavingsRepositoryInterface
     public function index()
     {
         $userId = Auth::id();
-        $year = Carbon::now()->year;
-
-        // Net total for the year
-        $total = Transaction::where('category_type', Saving::class)
-            ->where('user_id', $userId)
-            ->whereYear('created_at', $year)
-            ->selectRaw('SUM(CASE WHEN direction = 1 THEN amount ELSE -amount END) as balance')
-            ->value('balance');
-
-        // Last 6 months (semester)
         $startDate = Carbon::now()->subMonths(5)->startOfMonth();
         $endDate = Carbon::now()->endOfMonth();
 
-        $monthly = Transaction::where('category_type', Saving::class)
+        // Fetch all transactions for the last 6 months, sorted by date
+        $transactions = Transaction::where('category_type', Saving::class)
             ->where('user_id', $userId)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->selectRaw("DATE_FORMAT(created_at, '%Y-%m') as month, SUM(CASE WHEN direction = 1 THEN amount ELSE -amount END) as total")
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('total', 'month');
+            ->orderBy('created_at')
+            ->get();
 
-        // Ensure all last 6 months are present, fill missing with 0
-        $months = collect();
+        // Prepare months keys
+        $months = [];
         for ($i = 5; $i >= 0; $i--) {
             $monthKey = Carbon::now()->subMonths($i)->format('Y-m');
-            $months->put($monthKey, (float) ($monthly[$monthKey] ?? 0));
+            $months[$monthKey] = 0;
+        }
+
+        // Calculate running total
+        $runningTotal = 0;
+        foreach ($months as $monthKey => $value) {
+            // Get transactions for this month
+            $monthTransactions = $transactions->filter(function ($t) use ($monthKey) {
+                return Carbon::parse($t->created_at)->format('Y-m') === $monthKey;
+            });
+
+            // Net for this month
+            $monthNet = $monthTransactions->sum(function ($t) {
+                return $t->direction == 1 ? $t->amount : -$t->amount;
+            });
+
+            $runningTotal += $monthNet;
+            $months[Carbon::createFromFormat('Y-m', $monthKey)->format('F Y')] = $runningTotal;
         }
 
         return [
-            'total' => $total,
+            'total' => $runningTotal,
             'monthly' => $months
         ];
     }
