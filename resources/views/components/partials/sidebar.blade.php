@@ -109,8 +109,8 @@
         </li> --}}
 
         <!-- Settings -->
-        <li class="menu-item {{ request()->routeIs('settings') ? 'active' : '' }}">
-            <a href="{{ route('settings') }}" class="menu-link">
+        <li class="menu-item {{ request()->routeIs('settings.index') ? 'active' : '' }}">
+            <a href="{{ route('settings.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-cog"></i>
                 <div data-i18n="Account Settings">Account Settings</div>
             </a>

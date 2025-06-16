@@ -22,118 +22,102 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Account</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="pages-account-settings-notifications.html"><i class="bx bx-bell me-1"></i>
-                            Notifications</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pages-account-settings-connections.html"><i
-                                class="bx bx-link-alt me-1"></i> Connections</a>
-                    </li> --}}
                 </ul>
                 <div class="card mb-4">
                     <h5 class="card-header">Profile Details</h5>
-                    
+
                     <div class="card-body">
-                        <form id="formAccountSettings" method="POST">
+                        <form id="formAccountSettings" method="POST" action="{{ route('settings.update') }}">
+                            @csrf
+                            @method('PATCH')
+
                             <div class="row">
+                                {{-- First Name --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="first_name" class="form-label">First Name</label>
-                                    <input class="form-control" type="text" id="first_name" name="first_name" />
+                                    <input class="form-control" type="text" id="first_name" name="first_name"
+                                        value="{{ old('first_name', $settings->first_name) }}" />
                                 </div>
+
+                                {{-- Last Name --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="last_name" class="form-label">Last Name</label>
-                                    <input class="form-control" type="text" name="last_name" id="last_name" />
+                                    <input class="form-control" type="text" name="last_name" id="last_name"
+                                        value="{{ old('last_name', $settings->last_name) }}" />
                                 </div>
+
+                                {{-- Phone --}}
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label" for="phone">Phone Number</label>
                                     <div class="input-group input-group-merge">
-                                        <input type="text" id="phone" name="phone" class="form-control" />
+                                        <input type="text" id="phone" name="phone" class="form-control"
+                                            value="{{ old('phone', $settings->phone) }}" />
                                     </div>
                                 </div>
+
+                                {{-- Country --}}
                                 <div class="mb-3 col-md-6">
                                     <label class="form-label" for="country">Country</label>
                                     <select id="country" class="select2 form-select" name="country">
-                                        <option value="">Select</option>
-                                        <option value="Australia">Australia</option>
-                                        <option value="Bangladesh">Bangladesh</option>
-                                        <option value="Belarus">Belarus</option>
-                                        <option value="Brazil">Brazil</option>
-                                        <option value="Canada">Canada</option>
-                                        <option value="China">China</option>
-                                        <option value="France">France</option>
-                                        <option value="Germany">Germany</option>
-                                        <option value="India" selected>India</option>
-                                        <option value="Indonesia">Indonesia</option>
-                                        <option value="Israel">Israel</option>
-                                        <option value="Italy">Italy</option>
-                                        <option value="Japan">Japan</option>
-                                        <option value="Korea">Korea, Republic of</option>
-                                        <option value="Mexico">Mexico</option>
-                                        <option value="Philippines">Philippines</option>
-                                        <option value="Russia">Russian Federation</option>
-                                        <option value="South Africa">South Africa</option>
-                                        <option value="Thailand">Thailand</option>
-                                        <option value="Turkey">Turkey</option>
-                                        <option value="Ukraine">Ukraine</option>
-                                        <option value="United Arab Emirates">United Arab Emirates</option>
-                                        <option value="United Kingdom">United Kingdom</option>
-                                        <option value="United States">United States</option>
+                                        @foreach (config('country') as $code => $name)
+                                            <option value="{{ $code }}"
+                                                {{ old('country', $settings->country ?? '') === $code ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
+
+                                {{-- Language --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="language" class="form-label">Language</label>
                                     <select id="language" name="language" class="select2 form-select">
-                                        <option value="">Select Language</option>
-                                        <option value="en">English</option>
-                                        <option value="fr">French</option>
-                                        <option value="de">German</option>
-                                        <option value="pt">Portuguese</option>
+                                        @foreach (config('language') as $code => $lang)
+                                            <option value="{{ $code }}"
+                                                {{ old('language', $settings->language ?? '') === $code ? 'selected' : '' }}>
+                                                {{ $lang['native'] }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
+
+                                {{-- Time Zone --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="time_zones" class="form-label">Timezone</label>
                                     <select id="time_zones" name="time_zone" class="select2 form-select">
-                                        <option value="">Select Timezone</option>
-                                        <option value="-12">(GMT-12:00) International Date Line West</option>
-                                        <option value="-11">(GMT-11:00) Midway Island, Samoa</option>
-                                        <option value="-10">(GMT-10:00) Hawaii</option>
-                                        <option value="-9">(GMT-09:00) Alaska</option>
-                                        <option value="-8">(GMT-08:00) Pacific Time (US & Canada)</option>
-                                        <option value="-8">(GMT-08:00) Tijuana, Baja California</option>
-                                        <option value="-7">(GMT-07:00) Arizona</option>
-                                        <option value="-7">(GMT-07:00) Chihuahua, La Paz, Mazatlan</option>
-                                        <option value="-7">(GMT-07:00) Mountain Time (US & Canada)</option>
-                                        <option value="-6">(GMT-06:00) Central America</option>
-                                        <option value="-6">(GMT-06:00) Central Time (US & Canada)</option>
-                                        <option value="-6">(GMT-06:00) Guadalajara, Mexico City, Monterrey</option>
-                                        <option value="-6">(GMT-06:00) Saskatchewan</option>
-                                        <option value="-5">(GMT-05:00) Bogota, Lima, Quito, Rio Branco</option>
-                                        <option value="-5">(GMT-05:00) Eastern Time (US & Canada)</option>
-                                        <option value="-5">(GMT-05:00) Indiana (East)</option>
-                                        <option value="-4">(GMT-04:00) Atlantic Time (Canada)</option>
-                                        <option value="-4">(GMT-04:00) Caracas, La Paz</option>
+                                        @foreach (config('time_zone') as $zone => $label)
+                                            <option value="{{ $zone }}"
+                                                {{ old('time_zone', $settings->time_zone ?? '') === $zone ? 'selected' : '' }}>
+                                                {{ $label }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
+
+                                {{-- Currency --}}
                                 <div class="mb-3 col-md-6">
                                     <label for="currency" class="form-label">Currency</label>
                                     <select id="currency" name="currency" class="select2 form-select">
-                                        <option value="">Select Currency</option>
-                                        <option value="usd">USD</option>
-                                        <option value="euro">Euro</option>
-                                        <option value="pound">Pound</option>
-                                        <option value="bitcoin">Bitcoin</option>
+                                        @foreach (config('currency') as $code => $currency)
+                                            <option value="{{ $code }}"
+                                                {{ old('currency', $settings->currency ?? '') === $code ? 'selected' : '' }}>
+                                                {{ $currency['label'] }} ({{ $currency['symbol'] }})
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
+
+                            {{-- Save --}}
                             <div class="mt-2">
-                                <button type="submit" class="btn btn-primary me-2">Save changes</button>
-                                {{-- <button type="reset" class="btn btn-outline-secondary">Cancel</button> --}}
+                                <button type="submit" class="btn btn-primary me-2">Save</button>
                             </div>
                         </form>
                     </div>
                     <!-- /Account -->
                 </div>
+
+
                 <div class="card">
                     <h5 class="card-header">Delete Account</h5>
                     <div class="card-body">

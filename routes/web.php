@@ -57,9 +57,9 @@ Route::middleware(['auth', AuthorizeRole::class . ':user'])->group(function () {
     })->name('dashboard');
 
     // Settings
-    Route::get('/settings', function () {
-        return view('pages.settings');
-    })->name('settings');
+    Route::get('/settings', [AuthController::class, 'showSettings'])->name('settings.index');
+    Route::patch('/settings', [AuthController::class, 'updateSettings'])->name('settings.update');
+
 
     // transactions
     // ----------------- Transactions Routes Start -----------------

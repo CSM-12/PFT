@@ -7,7 +7,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SendResetFormRequest;
+use App\Http\Requests\Saving\UpdateSavingRequest;
 use App\Models\User;
+use App\Repositories\Contracts\Auth\SettingRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -18,6 +20,15 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+     // Repository
+    private $settingRepository;
+
+    // Inject the repository into the controller
+    public function __construct(SettingRepositoryInterface $settingRepository)
+    {
+        $this->settingRepository = $settingRepository;
+    }
+
     // Login
     public function login(LoginRequest $request)
     {
@@ -217,8 +228,51 @@ class AuthController extends Controller
         }
     }
 
-    public function updateSettings ()
+    public function showSettings ()
     {
-        
+        try {
+            $settings = $this->settingRepository->index();
+
+            // Get Settings
+            return view('pages.settings', compact('settings'));
+        } catch (\Exception $e) {
+            // Log error message
+            Log::error("Error fetching settings: " . $e->getMessage());
+
+            // Prepare alert message
+            session()->flash('alerts', [
+                'error' => ['Something went wrong while showing settings!']
+            ]);
+
+            // Return to back page
+            return redirect()->back();
+        }
+    }
+
+    public function updateSettings (UpdateSavingRequest $request)
+    {
+        try {
+            // Update settings
+            $this->settingRepository->update($request->all());
+
+            // Prepare alert message
+            session()->flash('alerts', [
+                'success' => ['Settings updated!']
+            ]);
+
+            // Return to index page
+            return redirect()->route('settings');
+        } catch (\Exception $e) {
+            // Prepare alert Massages
+            session()->flash('alerts', [
+                'error' => ['Settings not modified!', 'Something went wrong while modifing settings!']
+            ]);
+
+            // Log error message
+            Log::error("Something went wrong while modifing settings: " . $e->getMessage());
+
+            // Return to edit pages
+            return redirect()->back();
+        }
     }
 }

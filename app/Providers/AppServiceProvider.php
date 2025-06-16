@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Repositories\Contracts\Auth\SettingRepositoryInterface;
 use App\Repositories\Contracts\Dashboard\Charts\SemesterTransactionChartRepositoryInterface;
 use App\Repositories\Contracts\Dashboard\Charts\TotalSavingsRepositoryInterface;
 use App\Repositories\Contracts\Dashboard\Charts\TransactionCategoriesChartRepositoryInterface;
@@ -12,6 +13,7 @@ use App\Repositories\Eloquent\TransactionCategoryRepository;
 
 use App\Repositories\Contracts\Saving\SavingRepositoryInterface;
 use App\Repositories\Contracts\Transaction\TransactionRepositoryInterface;
+use App\Repositories\Eloquent\Auth\SettingRepository;
 use App\Repositories\Eloquent\Dashboard\Charts\SemesterTransactionChartRepository;
 use App\Repositories\Eloquent\Dashboard\Charts\TotalSavingsRepository;
 use App\Repositories\Eloquent\Dashboard\Charts\TransactionCategoriesChartRepository;
@@ -28,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        // Bind the SettingRepositoryInterface to the SettingRepository
+        $this->app->bind(SettingRepositoryInterface::class, SettingRepository::class);
+
+        
+        
         // Bind the TransactionRepositoryInterface to the TransactionRepository
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
 
@@ -39,18 +46,18 @@ class AppServiceProvider extends ServiceProvider
 
         // Bind the InvestmentRepositoryInterface to the InvestmentRepository
         $this->app->singleton(InvestmentRepositoryInterface::class, InvestmentRepository::class);
-    
-    
+
+
         // Dashboard Charts
         // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
         $this->app->bind(TransactionCategoriesChartRepositoryInterface::class, TransactionCategoriesChartRepository::class);
-        
+
         // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
         $this->app->bind(TransactionChartRepositoryInterface::class, TransactionChartRepository::class);
-        
+
         // Bind the TransactionChartRepositoryInterface to the TransactionChartRepository
         $this->app->bind(SemesterTransactionChartRepositoryInterface::class, SemesterTransactionChartRepository::class);
-    
+
         // Bind the TotalSavingsRepositoryInterface to the TotalSavingsRepository
         $this->app->bind(TotalSavingsRepositoryInterface::class, TotalSavingsRepository::class);
     }
