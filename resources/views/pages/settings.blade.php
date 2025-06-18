@@ -27,7 +27,7 @@
                     <h5 class="card-header">Profile Details</h5>
 
                     <div class="card-body">
-                        <form id="formAccountSettings" method="POST" action="{{ route('settings.update') }}">
+                        <form method="POST" action="{{ route('settings.update') }}">
                             @csrf
                             @method('PATCH')
 
@@ -37,6 +37,9 @@
                                     <label for="first_name" class="form-label">First Name</label>
                                     <input class="form-control" type="text" id="first_name" name="first_name"
                                         value="{{ old('first_name', $settings->first_name) }}" />
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'first_name'"></x-input-error>
                                 </div>
 
                                 {{-- Last Name --}}
@@ -44,6 +47,9 @@
                                     <label for="last_name" class="form-label">Last Name</label>
                                     <input class="form-control" type="text" name="last_name" id="last_name"
                                         value="{{ old('last_name', $settings->last_name) }}" />
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'last_name'"></x-input-error>
                                 </div>
 
                                 {{-- Phone --}}
@@ -52,6 +58,9 @@
                                     <div class="input-group input-group-merge">
                                         <input type="text" id="phone" name="phone" class="form-control"
                                             value="{{ old('phone', $settings->phone) }}" />
+
+                                        {{-- field error --}}
+                                        <x-input-error :errors="$errors" :field="'phone'"></x-input-error>
                                     </div>
                                 </div>
 
@@ -66,6 +75,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'country'"></x-input-error>
                                 </div>
 
                                 {{-- Language --}}
@@ -79,6 +91,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'language'"></x-input-error>
                                 </div>
 
                                 {{-- Time Zone --}}
@@ -92,6 +107,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'time_zone'"></x-input-error>
                                 </div>
 
                                 {{-- Currency --}}
@@ -105,6 +123,9 @@
                                             </option>
                                         @endforeach
                                     </select>
+
+                                    {{-- field error --}}
+                                    <x-input-error :errors="$errors" :field="'currency'"></x-input-error>
                                 </div>
                             </div>
 

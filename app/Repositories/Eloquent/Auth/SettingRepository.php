@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Eloquent\Auth;
 
-use App\Models\User;
 use App\Repositories\Contracts\Auth\SettingRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,11 +33,6 @@ class SettingRepository implements SettingRepositoryInterface
     public function update($data)
     {
         $user = Auth::user();
-
-        if (!$user) {
-            return false;
-        }
-
-        return $user->update($data); // returns true/false
+        return $user->update($data);
     }
 }

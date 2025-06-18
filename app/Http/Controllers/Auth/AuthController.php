@@ -7,7 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Http\Requests\Auth\SendResetFormRequest;
-use App\Http\Requests\Saving\UpdateSavingRequest;
+use App\Http\Requests\Auth\UpdateSettingRequest;
 use App\Models\User;
 use App\Repositories\Contracts\Auth\SettingRepositoryInterface;
 use Illuminate\Http\Request;
@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-     // Repository
+    // Repository
     private $settingRepository;
 
     // Inject the repository into the controller
@@ -228,7 +228,7 @@ class AuthController extends Controller
         }
     }
 
-    public function showSettings ()
+    public function showSettings()
     {
         try {
             $settings = $this->settingRepository->index();
@@ -249,7 +249,7 @@ class AuthController extends Controller
         }
     }
 
-    public function updateSettings (UpdateSavingRequest $request)
+    public function updateSettings(UpdateSettingRequest $request)
     {
         try {
             // Update settings
@@ -261,11 +261,12 @@ class AuthController extends Controller
             ]);
 
             // Return to index page
-            return redirect()->route('settings');
+            return redirect()->route('settings.index');
         } catch (\Exception $e) {
+
             // Prepare alert Massages
             session()->flash('alerts', [
-                'error' => ['Settings not modified!', 'Something went wrong while modifing settings!']
+                'danger' => ['Settings not modified!', 'Something went wrong while modifing settings!']
             ]);
 
             // Log error message
