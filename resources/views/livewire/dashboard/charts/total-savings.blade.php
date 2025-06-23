@@ -10,7 +10,7 @@
                         <span class="badge bg-label-warning rounded-pill">Year 2021</span>
                     </div>
                     <div class="mt-sm-auto">
-                        <h3 class="mb-0">${{ $totalSavings['total'] }}</h3>
+                        <h3 class="mb-0">{{ config('currency')[Auth::user()->currency]['symbol'] }}{{ $totalSavings['total'] }}</h3>
                     </div>
                 </div>
                 <div id="totalSavingsChart"></div>

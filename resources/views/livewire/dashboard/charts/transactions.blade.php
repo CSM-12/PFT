@@ -23,8 +23,8 @@
                                     class="text-muted d-block mb-1">{{ $transaction->created_at->format('h:i A, d M Y') }}</small>
                             </div>
                             <div class="user-progress d-flex align-items-center gap-1">
+                                <span>{{ config('currency')[Auth::user()->currency]['symbol'] }}</span>
                                 <h6 class="mb-0">{{ $transaction->amount }}</h6>
-                                <span class="text-muted">USD</span>
                             </div>
                         </div>
                     </li>

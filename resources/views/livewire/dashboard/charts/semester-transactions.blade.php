@@ -28,7 +28,7 @@
                         <div>
                             <small class="text-muted d-block">Total Balance</small>
                             <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
+                                <h6 class="mb-0 me-1">{{ config('currency')[Auth::user()->currency]['symbol'] }} 459.10</h6>
                                 <small class="text-success fw-semibold">
                                     <i class="bx bx-chevron-up"></i>
                                     42.9%
@@ -44,7 +44,7 @@
                         <div>
                             <p class="mb-n1 mt-1">Expenses This Quarter</p>
                             <small class="text-muted">
-                                ${{ abs($Semester_transactions['difference']['income'] ?? 0) }}
+                                {{ config('currency')[Auth::user()->currency]['symbol'] }} {{ abs($Semester_transactions['difference']['income'] ?? 0) }}
                                 {{ ($Semester_transactions['difference']['income'] ?? 0) >= 0 ? 'more' : 'less' }} than last quarter
                             </small>
                         </div>
@@ -62,7 +62,7 @@
                         <div>
                             <small class="text-muted d-block">Total Balance</small>
                             <div class="d-flex align-items-center">
-                                <h6 class="mb-0 me-1">$459.10</h6>
+                                <h6 class="mb-0 me-1">{{ config('currency')[Auth::user()->currency]['symbol'] }} 459.10</h6>
                                 <small class="text-success fw-semibold">
                                     <i class="bx bx-chevron-up"></i>
                                     42.9%
@@ -79,7 +79,7 @@
                         <div>
                             <p class="mb-n1 mt-1">Expenses This Quarter</p>
                             <small class="text-muted">
-                                ${{ abs($Semester_transactions['difference']['expense'] ?? 0) }}
+                                {{ config('currency')[Auth::user()->currency]['symbol'] }} {{ abs($Semester_transactions['difference']['expense'] ?? 0) }}
                                 {{ ($Semester_transactions['difference']['expense'] ?? 0) >= 0 ? 'more' : 'less' }} than last quarter
                             </small>
                         </div>

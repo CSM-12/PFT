@@ -50,7 +50,7 @@
                                 <small class="text-muted">Mobile, Earbuds, TV</small>
                             </div>
                             <div class="user-progress">
-                                <small class="fw-semibold">{{ $transactionCategoryChartData['total_amount'] }}</small>
+                                <small class="fw-semibold">{{ config('currency')[Auth::user()->currency]['symbol'] }} {{ $transactionCategoryChartData['total_amount'] }}</small>
                             </div>
                         </div>
                     </li>
